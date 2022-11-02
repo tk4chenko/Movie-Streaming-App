@@ -18,7 +18,7 @@ class ViewModelAuthenticationVC {
         
         genresRequest.responseDecodable(of: TokenResponce.self) { response in
             do {
-                let data = try response.result.get().requestToken
+                let data = try response.result.get().request_token
                 completion(data)
             }
             catch {
@@ -28,7 +28,7 @@ class ViewModelAuthenticationVC {
         }
     }
     
-    func createSessionWithLogin(username: String, password: String, requestToken: String, completion: @escaping (TokenResponce) -> Void) {
+    func createSessionWithLogin(username: String, password: String, requestToken: String, completion: @escaping () -> Void) {
         
         let parameters: [String: Any] = [
               "username": username,
@@ -38,10 +38,10 @@ class ViewModelAuthenticationVC {
         
         let genresRequest = AF.request("https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=\(apiKey)", method: .post, parameters: parameters, encoding: JSONEncoding.default)
         
-        genresRequest.responseDecodable(of: TokenResponce.self) { response in
+        genresRequest.responseDecodable(of: SessionResponce.self) { response in
             do {
-                let data = try response.result.get()
-                completion(data)
+                _ = try response.result.get()
+                completion()
             }
             catch {
                 print("error: \(error)")
@@ -50,7 +50,7 @@ class ViewModelAuthenticationVC {
         }
     }
     
-    func createSession(requestToken: String, completion: @escaping (TokenResponce) -> Void) {
+    func createSession(requestToken: String, completion: @escaping (String) -> Void) {
         
         let parameters: [String: Any] = [
           "request_token": requestToken
@@ -58,10 +58,10 @@ class ViewModelAuthenticationVC {
         
         let genresRequest = AF.request("https://api.themoviedb.org/3/authentication/session/new?api_key=\(apiKey)", method: .post, parameters: parameters, encoding: JSONEncoding.default)
         
-        genresRequest.responseDecodable(of: TokenResponce.self) { response in
+        genresRequest.responseDecodable(of: SessionResponce.self) { response in
             do {
-                let data = try response.result.get()
-                completion(data)
+                let data = try response.result.get().session_id
+                completion(data ?? "Failure session")
             }
             catch {
                 print("error: \(error)")

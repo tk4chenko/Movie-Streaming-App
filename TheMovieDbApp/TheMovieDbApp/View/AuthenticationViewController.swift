@@ -30,8 +30,10 @@ class AuthenticationViewController: UIViewController {
     
     @IBAction func loginPressed(_ sender: Any) {
         viewModel.createRequestToken { token in
-            self.viewModel.createSessionWithLogin(username: self.username, password: self.password, requestToken: token) { validate in
-                print(validate)
+            self.viewModel.createSessionWithLogin(username: self.username, password: self.password, requestToken: token) {
+                self.viewModel.createSession(requestToken: token) { session in
+                    print(session)
+                }
             }
         }
     }
