@@ -32,7 +32,9 @@ class AuthenticationViewController: UIViewController {
         viewModel.createRequestToken { token in
             self.viewModel.createSessionWithLogin(username: self.username, password: self.password, requestToken: token) {
                 self.viewModel.createSession(requestToken: token) { session in
-                    print(session)
+                    if session == true {
+                        
+                    }
                 }
             }
         }

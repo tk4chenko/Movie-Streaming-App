@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="LhU-5r-nXy">
-                                <rect key="frame" x="0.0" y="91" width="390" height="753"/>
+                                <rect key="frame" x="0.0" y="122" width="390" height="722"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bLT-oe-iqn">
                                     <size key="itemSize" width="128" height="128"/>
@@ -37,19 +37,33 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="d8Z-JK-Hdc">
+                                <rect key="frame" x="0.0" y="91" width="390" height="32"/>
+                                <segments>
+                                    <segment title="Movies"/>
+                                    <segment title="TVShows"/>
+                                </segments>
+                                <connections>
+                                    <action selector="pressedSegment:" destination="BYZ-38-t0r" eventType="valueChanged" id="Js1-pe-9DB"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="LhU-5r-nXy" secondAttribute="bottom" id="TwW-oR-9Fd"/>
-                            <constraint firstItem="LhU-5r-nXy" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="XkR-wg-w6g"/>
-                            <constraint firstItem="LhU-5r-nXy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="dDS-yW-utP"/>
-                            <constraint firstItem="LhU-5r-nXy" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="gnW-Qa-doN"/>
+                            <constraint firstItem="LhU-5r-nXy" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="6RT-lv-T5V"/>
+                            <constraint firstItem="d8Z-JK-Hdc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="9IE-xS-Kf8"/>
+                            <constraint firstItem="LhU-5r-nXy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="G9j-14-FjL"/>
+                            <constraint firstItem="d8Z-JK-Hdc" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="PoD-NW-AuR"/>
+                            <constraint firstAttribute="bottom" secondItem="LhU-5r-nXy" secondAttribute="bottom" id="cXe-ta-PsB"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="d8Z-JK-Hdc" secondAttribute="trailing" id="krM-ZH-JbP"/>
+                            <constraint firstItem="LhU-5r-nXy" firstAttribute="top" secondItem="d8Z-JK-Hdc" secondAttribute="bottom" id="oSq-x9-CYZ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Movies" id="gsp-1e-dRS"/>
                     <connections>
                         <outlet property="moviesCollectionView" destination="LhU-5r-nXy" id="WSU-i5-5V0"/>
+                        <outlet property="segmentController" destination="d8Z-JK-Hdc" id="LKh-1Q-Zfj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -141,6 +155,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="O4h-1b-HNt" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="k8L-y0-Tlv">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
