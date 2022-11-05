@@ -18,10 +18,6 @@ class MoviesViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         
-//        viewModel.loadGenresforMovies { genre in 
-//            self.moviesCollectionView.reloadData()
-//        }
-        
         viewModel.loadTvByGenre {
             self.moviesCollectionView.reloadData()
         }
@@ -30,9 +26,9 @@ class MoviesViewController: UIViewController {
             self.moviesCollectionView.reloadData()
         }
 
-        moviesCollectionView.register(UINib(nibName: "SectionHeader", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SectionHeader")
-        
-        moviesCollectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieCollectionViewCell")
+        moviesCollectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.identifier)
+        moviesCollectionView.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: MovieCollectionViewCell.identifier)
+
     }
     
     private func setupUI() {
@@ -53,7 +49,7 @@ class MoviesViewController: UIViewController {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = .init(top: spacing, leading: spacing, bottom: spacing, trailing: spacing)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(175), heightDimension: .absolute(285))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(185), heightDimension: .absolute(300))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
@@ -63,8 +59,7 @@ class MoviesViewController: UIViewController {
                                                                  alignment: .top)
         let section = NSCollectionLayoutSection(group: group)
         section.boundarySupplementaryItems = [header]
-        section.orthogonalScrollingBehavior = .continuous
-//        section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 4, trailing: 8)
+        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
     }
@@ -76,7 +71,7 @@ extension MoviesViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SectionHeader", for: indexPath) as! SectionHeader
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.identifier, for: indexPath) as! SectionHeader
         switch segmentController.selectedSegmentIndex {
         case 0:
             header.nameLabel.text = Array(self.viewModel.dictOfMovies.keys).sorted(by: <)[indexPath.section]
@@ -108,7 +103,7 @@ extension MoviesViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionViewCell", for: indexPath) as? MovieCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell else { return UICollectionViewCell() }
         
         switch segmentController.selectedSegmentIndex {
         case 0:

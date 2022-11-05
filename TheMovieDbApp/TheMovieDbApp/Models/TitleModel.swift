@@ -15,7 +15,7 @@ struct TitleResponce: Codable {
 }
 
 struct Title: Codable {
-    let backdrop_path: String
+    let backdrop_path: String?
     let id: Int
     let name: String?
     let title: String?
