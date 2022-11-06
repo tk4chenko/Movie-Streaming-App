@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="LhU-5r-nXy">
-                                <rect key="frame" x="0.0" y="134" width="390" height="710"/>
+                                <rect key="frame" x="0.0" y="122" width="390" height="722"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bLT-oe-iqn">
                                     <size key="itemSize" width="128" height="128"/>
@@ -54,7 +54,7 @@
                             <constraint firstItem="d8Z-JK-Hdc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="9IE-xS-Kf8"/>
                             <constraint firstItem="d8Z-JK-Hdc" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="PoD-NW-AuR"/>
                             <constraint firstItem="LhU-5r-nXy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="U9a-Vt-zFi"/>
-                            <constraint firstItem="LhU-5r-nXy" firstAttribute="top" secondItem="d8Z-JK-Hdc" secondAttribute="bottom" constant="12" id="X7O-Xb-PMe"/>
+                            <constraint firstItem="LhU-5r-nXy" firstAttribute="top" secondItem="d8Z-JK-Hdc" secondAttribute="bottom" id="X7O-Xb-PMe"/>
                             <constraint firstAttribute="bottom" secondItem="LhU-5r-nXy" secondAttribute="bottom" id="d32-M8-7Ar"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="d8Z-JK-Hdc" secondAttribute="trailing" id="krM-ZH-JbP"/>
                             <constraint firstAttribute="trailing" secondItem="LhU-5r-nXy" secondAttribute="trailing" id="pbj-Lg-H8U"/>

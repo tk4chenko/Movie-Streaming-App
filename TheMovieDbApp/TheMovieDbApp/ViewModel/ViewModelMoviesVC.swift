@@ -8,6 +8,11 @@
 import Foundation
 import Alamofire
 
+enum MediaType: String{
+    case movie
+    case tv
+}
+
 class ViewModelMoviesVC {
     
 //    var arrayOfMovies = [Title]()
@@ -18,7 +23,7 @@ class ViewModelMoviesVC {
     
     var dictOfMovies = [String: [Media]]()
     var dictOfTVShows = [String: [Media]]()
-    
+
     
     func loadMovieByGenre(completion: @escaping () -> Void) {
         loadGenresforMovies { genres in
@@ -70,7 +75,7 @@ class ViewModelMoviesVC {
         
         genresRequest.responseDecodable(of: Genres.self) { response in
             do {
-//                self.arrayOfMovieGenres = try response.result.get().genres
+                self.arrayOfMovieGenres = try response.result.get().genres
                 let data = try response.result.get().genres
                 completion(data)
             }
@@ -87,7 +92,7 @@ class ViewModelMoviesVC {
         
         genresRequest.responseDecodable(of: Genres.self) { response in
             do {
-//                self.arrayOfTVGenres = try response.result.get().genres
+                self.arrayOfTVGenres = try response.result.get().genres
                 let data = try response.result.get().genres
                 completion(data)
             }

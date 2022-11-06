@@ -33,7 +33,6 @@ class MovieCollectionViewCell: UICollectionViewCell {
         label.numberOfLines = 1
         label.textAlignment = .left
         label.textColor = .black
-//        label.layer.masksToBounds = false
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         return label
     }()

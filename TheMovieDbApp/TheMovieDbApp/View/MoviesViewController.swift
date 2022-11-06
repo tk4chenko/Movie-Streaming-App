@@ -17,7 +17,7 @@ class MoviesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        
+
         viewModel.loadTvByGenre {
             self.moviesCollectionView.reloadData()
         }
@@ -63,6 +63,14 @@ class MoviesViewController: UIViewController {
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
     }
+    
+//    func setupConstraints() {
+//        view.addSubview(segmentControl)
+//
+//        NSLayoutConstraint.activate([
+//
+//        ])
+//    }
 
 
 }
@@ -133,11 +141,11 @@ extension MoviesViewController: UICollectionViewDelegate {
         case 0:
             let key = Array(viewModel.dictOfMovies.keys).sorted(by: <)[indexPath.section]
             let value = viewModel.dictOfMovies[key]![indexPath.row]
-            vc.configure(with: value)
+            vc.configure(media: value, genres: viewModel.arrayOfMovieGenres)
         case 1:
             let key = Array(viewModel.dictOfTVShows.keys).sorted(by: <)[indexPath.section]
             let value = viewModel.dictOfTVShows[key]![indexPath.row]
-            vc.configure(with: value)
+            vc.configure(media: value, genres: viewModel.arrayOfTVGenres)
         default:
             print("no controller")
         }
