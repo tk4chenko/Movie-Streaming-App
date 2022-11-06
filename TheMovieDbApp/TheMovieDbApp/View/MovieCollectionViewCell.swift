@@ -34,7 +34,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
         label.textAlignment = .left
         label.textColor = .black
 //        label.layer.masksToBounds = false
-        label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         return label
     }()
     
@@ -70,7 +70,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
         container.layer.cornerRadius = 6
     }
     
-    public func configure(with title: Title) {
+    public func configure(with title: Media) {
         scoreLabel.text = String(Int(title.vote_average * 10)) + "%"
         titleLabel.text = String(title.title ?? "" + (title.name ?? ""))
         guard let url = URL(string: "https://image.tmdb.org/t/p/w500" + (title.poster_path ?? "")) else { return }

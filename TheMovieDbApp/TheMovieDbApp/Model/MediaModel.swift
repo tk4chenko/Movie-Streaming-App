@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct TitleResponce: Codable {
+struct MediaResponce: Codable {
     let page: Int
-    let results: [Title]
+    let results: [Media]
     let total_pages: Int
     let total_results: Int
 }
 
-struct Title: Codable {
+struct Media: Codable {
     let backdrop_path: String?
     let id: Int
     let name: String?

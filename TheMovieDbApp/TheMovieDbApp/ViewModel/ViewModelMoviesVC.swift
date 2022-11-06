@@ -13,11 +13,11 @@ class ViewModelMoviesVC {
 //    var arrayOfMovies = [Title]()
 //    var arrayOfTVShows = [Title]()
     
-//    var arrayOfMovieGenres = [Genre]()
-//    var arrayOfTVGenres = [Genre]()
+    var arrayOfMovieGenres = [Genre]()
+    var arrayOfTVGenres = [Genre]()
     
-    var dictOfMovies = [String: [Title]]()
-    var dictOfTVShows = [String: [Title]]()
+    var dictOfMovies = [String: [Media]]()
+    var dictOfTVShows = [String: [Media]]()
     
     
     func loadMovieByGenre(completion: @escaping () -> Void) {
@@ -25,7 +25,7 @@ class ViewModelMoviesVC {
             for genre in genres {
                 let movieRequest = AF.request("https://api.themoviedb.org/3/discover/movie?api_key=\(apiKey)&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&with_genres=\(genre.id)&with_watch_monetization_types=flatrate", method: .get)
                 
-                movieRequest.responseDecodable(of: TitleResponce.self) { responce in
+                movieRequest.responseDecodable(of: MediaResponce.self) { responce in
                     do {
                         let data = try responce.result.get().results
                         self.dictOfMovies[genre.name] = data
@@ -46,7 +46,7 @@ class ViewModelMoviesVC {
             for genre in genres {
                 
                 let request = AF.request("https://api.themoviedb.org/3/discover/tv?sort_by=popularity.desc&api_key=\(apiKey)&with_genres=\(genre.id)", method: .get)
-                request.responseDecodable(of: TitleResponce.self) { response in
+                request.responseDecodable(of: MediaResponce.self) { response in
                     do {
                         let data = try response.result.get().results
 //                        self.arrayOfTVShows = try response.result.get().results

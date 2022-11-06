@@ -68,7 +68,38 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1943.0769230769231" y="3.5545023696682461"/>
+            <point key="canvasLocation" x="1491" y="-7"/>
+        </scene>
+        <!--Search View Controller-->
+        <scene sceneID="jki-ut-XsI">
+            <objects>
+                <viewController id="emI-dP-xef" customClass="SearchViewController" customModule="TheMovieDbApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="OOU-pd-fgN">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="yrQ-9m-NsJ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="dgx-KZ-u2X"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="keZ-Of-0kk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1491" y="692"/>
+        </scene>
+        <!--Details View Controller-->
+        <scene sceneID="muw-es-F8B">
+            <objects>
+                <viewController storyboardIdentifier="DetailsViewController" id="NKd-Ut-n2W" customClass="DetailsViewController" customModule="TheMovieDbApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="df5-qf-pUj">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="lMM-KA-fC4"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="REf-yY-lCy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2735" y="692"/>
         </scene>
         <!--Authentication View Controller-->
         <scene sceneID="hV4-bD-vKf">
@@ -147,7 +178,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JDm-Vx-IjR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1172" y="4"/>
+            <point key="canvasLocation" x="660" y="-7"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="PvB-2Y-wRI">
@@ -161,15 +192,36 @@
                     </tabBar>
                     <connections>
                         <segue destination="94Z-AZ-2fv" kind="relationship" relationship="viewControllers" id="zu6-wc-UxW"/>
+                        <segue destination="fOP-Po-D8U" kind="relationship" relationship="viewControllers" id="c99-05-Lqg"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Yx-Qc-BgG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="403" y="4"/>
+            <point key="canvasLocation" x="-217" y="324"/>
+        </scene>
+        <!--Search-->
+        <scene sceneID="xdY-RL-AHR">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fOP-Po-D8U" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Search" image="magnifyingglass" catalog="system" id="wcg-I0-LEi"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="USJ-Q1-o4c">
+                        <rect key="frame" x="0.0" y="47" width="390" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="emI-dP-xef" kind="relationship" relationship="rootViewController" id="daF-kV-L3W"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NyR-eB-C5p" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="660" y="692"/>
         </scene>
     </scenes>
     <resources>
         <image name="film" catalog="system" width="128" height="93"/>
+        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

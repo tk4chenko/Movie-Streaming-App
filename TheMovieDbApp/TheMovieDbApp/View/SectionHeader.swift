@@ -17,7 +17,7 @@ class SectionHeader: UICollectionReusableView {
         label.numberOfLines = 1
         label.textAlignment = .left
         label.adjustsFontForContentSizeCategory = true
-        label.font = UIFont.systemFont(ofSize: 24, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
         label.textColor = .black
         return label
     }()
