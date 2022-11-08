@@ -28,6 +28,8 @@
 		0498A55229115E6300A70DCA /* ViewModelAuthenticationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498A55129115E6300A70DCA /* ViewModelAuthenticationVC.swift */; };
 		0498A55429115EC000A70DCA /* AuthenticationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498A55329115EC000A70DCA /* AuthenticationModel.swift */; };
 		04B9CBD92915453A00F72258 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B9CBD72915453A00F72258 /* SectionHeader.swift */; };
+		04BA20B82919701A007AAC11 /* WatchlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA20B72919701A007AAC11 /* WatchlistViewController.swift */; };
+		04BA20BA2919738B007AAC11 /* ViewModelWatchlistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA20B92919738B007AAC11 /* ViewModelWatchlistVC.swift */; };
 		76656061FC992F6B47241EC0 /* Pods_TheMovieDbApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF7F8C40D81A29F0B45880F /* Pods_TheMovieDbApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +57,8 @@
 		0498A55129115E6300A70DCA /* ViewModelAuthenticationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelAuthenticationVC.swift; sourceTree = "<group>"; };
 		0498A55329115EC000A70DCA /* AuthenticationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationModel.swift; sourceTree = "<group>"; };
 		04B9CBD72915453A00F72258 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
+		04BA20B72919701A007AAC11 /* WatchlistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistViewController.swift; sourceTree = "<group>"; };
+		04BA20B92919738B007AAC11 /* ViewModelWatchlistVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelWatchlistVC.swift; sourceTree = "<group>"; };
 		223EEF37E475248F5FB5031D /* Pods-TheMovieDbApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheMovieDbApp.release.xcconfig"; path = "Target Support Files/Pods-TheMovieDbApp/Pods-TheMovieDbApp.release.xcconfig"; sourceTree = "<group>"; };
 		3B81875C508DA3EF396E97AC /* Pods-TheMovieDbApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheMovieDbApp.debug.xcconfig"; path = "Target Support Files/Pods-TheMovieDbApp/Pods-TheMovieDbApp.debug.xcconfig"; sourceTree = "<group>"; };
 		AEF7F8C40D81A29F0B45880F /* Pods_TheMovieDbApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TheMovieDbApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +136,7 @@
 				041BC78B29131C81005AEBB6 /* ViewModelMoviesVC.swift */,
 				0486BDCC29180033001FADBE /* ViewModelDetailsVC.swift */,
 				0429B6222916B68800228598 /* ViewModelSearchVC.swift */,
+				04BA20B92919738B007AAC11 /* ViewModelWatchlistVC.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -147,6 +152,7 @@
 				0498A54B29115C9600A70DCA /* AuthenticationViewController.swift */,
 				0471EE37291033B20087EE1E /* MoviesViewController.swift */,
 				046754952915A3D000EC8098 /* DetailsViewController.swift */,
+				04BA20B72919701A007AAC11 /* WatchlistViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -284,6 +290,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0471EE38291033B20087EE1E /* MoviesViewController.swift in Sources */,
+				04BA20B82919701A007AAC11 /* WatchlistViewController.swift in Sources */,
 				0498A55229115E6300A70DCA /* ViewModelAuthenticationVC.swift in Sources */,
 				047B24B0291820AF00F545B5 /* VideoCollectionViewCell.swift in Sources */,
 				046754982915A3F100EC8098 /* MovieTableViewCell.swift in Sources */,
@@ -295,6 +302,7 @@
 				041BC78C29131C81005AEBB6 /* ViewModelMoviesVC.swift in Sources */,
 				0486BDCD29180033001FADBE /* ViewModelDetailsVC.swift in Sources */,
 				0429B6212916B4CA00228598 /* SearchViewController.swift in Sources */,
+				04BA20BA2919738B007AAC11 /* ViewModelWatchlistVC.swift in Sources */,
 				041BC79329131E63005AEBB6 /* MovieCollectionViewCell.swift in Sources */,
 				04B9CBD92915453A00F72258 /* SectionHeader.swift in Sources */,
 				0429B6232916B68800228598 /* ViewModelSearchVC.swift in Sources */,

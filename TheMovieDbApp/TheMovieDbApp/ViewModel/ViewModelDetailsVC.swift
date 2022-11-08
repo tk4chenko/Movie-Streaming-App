@@ -8,13 +8,16 @@
 import Foundation
 import Alamofire
 
+enum MediaType: String{
+    case movie
+    case tv
+}
+
 class ViewModelDetailsVC {
     
     var arrayOfViedos = [Video]()
     
-    //    let mediaType = MediaType.movie
-    
-    func loadTrailerForMovie(mediaType: MediaType, movieId: Int, completion: @escaping ([Video]) -> ()) {
+    func loadTrailer(mediaType: MediaType, movieId: Int, completion: @escaping ([Video]) -> ()) {
         
         let genresRequest = AF.request("https://api.themoviedb.org/3/\(mediaType)/\(movieId)/videos?api_key=\(apiKey)", method: .get)
         
@@ -33,4 +36,28 @@ class ViewModelDetailsVC {
         }
         
     }
+    
+    func addToWatchlist(mediaType: MediaType, mediaId: Int, sessionId: String, completion: @escaping () -> Void) {
+        
+        let parameters: [String: Any] = [
+              "media_type": mediaType,
+              "media_id": mediaId,
+              "watchlist": true
+        ]
+        
+        let genresRequest = AF.request("https://api.themoviedb.org/3/account/14577701/watchlist?api_key=\(apiKey)&session_id=\(sessionId)", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+        
+        genresRequest.responseDecodable(of: SessionResponce.self) { response in
+            do {
+                _ = try response.result.get()
+                completion()
+            }
+            catch {
+                print("error: \(error)")
+            }
+            
+        }
+    }
+    
+    
 }

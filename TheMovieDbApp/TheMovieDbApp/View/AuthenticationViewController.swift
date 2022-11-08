@@ -7,6 +7,8 @@
 
 import UIKit
 
+var sessionId = String()
+
 class AuthenticationViewController: UIViewController {
     
     private let viewModel = ViewModelAuthenticationVC()
@@ -32,12 +34,19 @@ class AuthenticationViewController: UIViewController {
         viewModel.createRequestToken { token in
             self.viewModel.createSessionWithLogin(username: self.username, password: self.password, requestToken: token) {
                 self.viewModel.createSession(requestToken: token) { session in
-                    if session == true {
-                        
+                    print(session)
+                    sessionId = session.session_id ?? ""
+                    if session.success == true {
+                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                        let vc = storyboard.instantiateViewController(withIdentifier: "UITabBarController")
+                        vc.modalPresentationStyle = .fullScreen
+//                        self.dismiss(animated: true)
+                        self.present(vc, animated: false)
                     }
                 }
             }
         }
+        
     }
-
+    
 }

@@ -14,6 +14,9 @@ class DetailsViewController: UIViewController {
     let viewModel = ViewModelDetailsVC()
     
     static var identifier = "DetailsViewController"
+    private var mediaId = Int()
+    
+    var arrayOfVideos = [Video]()
     
     private let posterView: UIImageView = {
         let imageView = UIImageView()
@@ -55,7 +58,7 @@ class DetailsViewController: UIViewController {
     private let overviewLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
+        label.numberOfLines = 7
         label.textAlignment = .left
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
@@ -80,6 +83,8 @@ class DetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .white
+        
         videoCollectionView.delegate = self
         videoCollectionView.dataSource = self
         
@@ -100,9 +105,9 @@ class DetailsViewController: UIViewController {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = .init(top: spacing, leading: spacing, bottom: spacing, trailing: spacing)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(200), heightDimension: .absolute(300))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(view.frame.size.width / 1.77))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
+
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .paging
         layout = UICollectionViewCompositionalLayout(section: section)
@@ -110,10 +115,11 @@ class DetailsViewController: UIViewController {
     }
     
     @objc func addTapped() {
-        print("add")
+        print(mediaId)
     }
     
-    public func configure(media: Media, genres: [Genre]) {
+    public func configure(mediaType: MediaType, media: Media, genres: [Genre]) {
+        mediaId = media.id
         title = media.title ?? "" + (media.name ?? "")
         titleLabel.text = media.original_title ?? "" + (media.original_name ?? "")
         let date = media.release_date ?? "" + (media.first_air_date ?? "")
@@ -134,6 +140,12 @@ class DetailsViewController: UIViewController {
             }
         }
         genreLabel.text = g
+        viewModel.loadTrailer(mediaType: mediaType, movieId: media.id) { videos in
+            DispatchQueue.main.async {
+                self.arrayOfVideos = videos
+                self.videoCollectionView.reloadData()
+            }
+        }
     }
     
     private func setupConstraint() {
@@ -169,7 +181,7 @@ class DetailsViewController: UIViewController {
             videoCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0),
             videoCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0),
             videoCollectionView.topAnchor.constraint(equalTo: overviewLabel.bottomAnchor, constant: 10),
-            videoCollectionView.heightAnchor.constraint(equalTo: videoCollectionView.widthAnchor, multiplier: 0.5),
+            videoCollectionView.heightAnchor.constraint(equalTo: videoCollectionView.widthAnchor, multiplier: 0.56)
     
         ])
     }
@@ -177,14 +189,14 @@ class DetailsViewController: UIViewController {
 
 extension DetailsViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        1
+        self.arrayOfVideos.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VideoCollectionViewCell.identifier, for: indexPath) as? VideoCollectionViewCell else { return UICollectionViewCell() }
+        cell.playerView.load(withVideoId: arrayOfVideos[indexPath.row].key)
         return cell
         
     }
-    
     
 }

@@ -39,7 +39,7 @@ class SearchViewController: UIViewController {
         viewModel.loadGenresforMovies { genre in
             self.genres = genre
         }
-        
+//        searchBar.searchBar.delegate = self
         navigationItem.title  = "Search"
         view.backgroundColor = .systemBackground
         searchBar.searchResultsUpdater = self
@@ -102,27 +102,20 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
         }
         return UICollectionViewCell()
     }
-    //    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    //        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-    //        guard let vc = storyboard.instantiateViewController(withIdentifier: "DetailsViewController") as? DetailsViewController else { return }
-    //
-    //        var currentGenre = ""
-    //
-    //        for id in movies[indexPath.row].genre_ids {
-    //            for genre in genres {
-    //                if id == genre.id {
-    //                    if id == movies[indexPath.row].genre_ids.last {
-    //                        currentGenre += genre.name + " "
-    //                    } else {
-    //                        currentGenre += genre.name + ", "
-    //                    }
-    //                }
-    //            }
-    //        }
-    //
-    //        vc.genre = currentGenre
-    //        vc.configureForSearch(with: movies[indexPath.row])
-    //
-    //        self.navigationController?.pushViewController(vc, animated: true)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let vc = storyboard.instantiateViewController(withIdentifier: "DetailsViewController") as? DetailsViewController else { return }
+        vc.configure(mediaType: .movie, media: movies[indexPath.row], genres: genres)
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+}
+// doesn't work
+extension SearchViewController: UISearchBarDelegate {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        movies.removeAll()
+        searchBar.text = ""
+        movieCollectionView.reloadData()
+    }
 }
 

@@ -50,7 +50,7 @@ class ViewModelAuthenticationVC {
         }
     }
     
-    func createSession(requestToken: String, completion: @escaping (Bool) -> Void) {
+    func createSession(requestToken: String, completion: @escaping (SessionResponce) -> Void) {
         
         let parameters: [String: Any] = [
           "request_token": requestToken
@@ -60,7 +60,7 @@ class ViewModelAuthenticationVC {
         
         genresRequest.responseDecodable(of: SessionResponce.self) { response in
             do {
-                let data = try response.result.get().success
+                let data = try response.result.get()
                 completion(data)
             }
             catch {

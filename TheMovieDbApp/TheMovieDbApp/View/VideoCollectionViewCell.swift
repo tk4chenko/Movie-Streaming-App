@@ -12,8 +12,8 @@ class VideoCollectionViewCell: UICollectionViewCell {
     
     static var identifier = "VideoCollectionViewCell"
     
-    private let playerView: UIView = {
-        let view = UIView()
+    public var playerView: YTPlayerView = {
+        let view = YTPlayerView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleToFill
         view.backgroundColor = .systemRed
