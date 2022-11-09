@@ -8,6 +8,7 @@
 import UIKit
 
 var sessionId = String()
+var accountId = Int()
 
 class AuthenticationViewController: UIViewController {
     
@@ -34,8 +35,14 @@ class AuthenticationViewController: UIViewController {
         viewModel.createRequestToken { token in
             self.viewModel.createSessionWithLogin(username: self.username, password: self.password, requestToken: token) {
                 self.viewModel.createSession(requestToken: token) { session in
+                    self.viewModel.getAccountId(sessionId: session.session_id ?? "") { accountID in
+                        accountId = accountID.id ?? 0
+                        print(accountID.id ?? 0)
+                    }
                     print(session)
+                    
                     sessionId = session.session_id ?? ""
+                    
                     if session.success == true {
                         let storyboard = UIStoryboard(name: "Main", bundle: nil)
                         let vc = storyboard.instantiateViewController(withIdentifier: "UITabBarController")

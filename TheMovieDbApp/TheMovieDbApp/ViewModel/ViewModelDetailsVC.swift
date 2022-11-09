@@ -37,7 +37,7 @@ class ViewModelDetailsVC {
         
     }
     
-    func addToWatchlist(mediaType: MediaType, mediaId: Int, sessionId: String, completion: @escaping () -> Void) {
+    func addToWatchlist(accountID: Int, mediaType: String, mediaId: Int, sessionId: String, completion: @escaping (Welcome, String) -> Void) {
         
         let parameters: [String: Any] = [
               "media_type": mediaType,
@@ -45,12 +45,12 @@ class ViewModelDetailsVC {
               "watchlist": true
         ]
         
-        let genresRequest = AF.request("https://api.themoviedb.org/3/account/14577701/watchlist?api_key=\(apiKey)&session_id=\(sessionId)", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+        let genresRequest = AF.request("https://api.themoviedb.org/3/account/\(accountID)/watchlist?api_key=\(apiKey)&session_id=\(sessionId)", method: .post, parameters: parameters, encoding: JSONEncoding.default)
         
-        genresRequest.responseDecodable(of: SessionResponce.self) { response in
+        genresRequest.responseDecodable(of: Welcome.self) { response in
             do {
-                _ = try response.result.get()
-                completion()
+                let data = try response.result.get()
+                completion(data, mediaType)
             }
             catch {
                 print("error: \(error)")

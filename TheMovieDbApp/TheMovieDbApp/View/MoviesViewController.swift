@@ -63,15 +63,6 @@ class MoviesViewController: UIViewController {
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
     }
-    
-//    func setupConstraints() {
-//        view.addSubview(segmentControl)
-//
-//        NSLayoutConstraint.activate([
-//
-//        ])
-//    }
-
 
 }
 

@@ -15,6 +15,7 @@ class DetailsViewController: UIViewController {
     
     static var identifier = "DetailsViewController"
     private var mediaId = Int()
+    private var isSaved = false
     
     var arrayOfVideos = [Video]()
     
@@ -88,7 +89,12 @@ class DetailsViewController: UIViewController {
         videoCollectionView.delegate = self
         videoCollectionView.dataSource = self
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(addTapped))
+        if isSaved == false {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(addTapped))
+        } else {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star.fill"))
+        }
+        
     }
     
     override func viewWillLayoutSubviews() {
@@ -115,7 +121,13 @@ class DetailsViewController: UIViewController {
     }
     
     @objc func addTapped() {
-        print(mediaId)
+        viewModel.addToWatchlist(accountID: accountId, mediaType: "movie", mediaId: mediaId, sessionId: sessionId) { result, mediaType in
+            print(mediaType)
+            print(result)
+            
+            self.isSaved = true
+            print(self.isSaved)
+        }
     }
     
     public func configure(mediaType: MediaType, media: Media, genres: [Genre]) {

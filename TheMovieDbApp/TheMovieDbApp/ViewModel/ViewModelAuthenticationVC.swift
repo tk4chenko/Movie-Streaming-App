@@ -70,4 +70,21 @@ class ViewModelAuthenticationVC {
         }
     }
     
+    func getAccountId(sessionId: String, completion: @escaping (AccountID) -> Void) {
+        
+        let genresRequest = AF.request("https://api.themoviedb.org/3/account?api_key=\(apiKey)&session_id=\(sessionId)", method: .get)
+        
+        genresRequest.responseDecodable(of: AccountID.self) { response in
+            do {
+                let data = try response.result.get()
+                completion(data)
+            }
+            catch {
+                print("error: \(error)")
+            }
+            
+        }
+    
+    }
+    
 }
