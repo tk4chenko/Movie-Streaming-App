@@ -9,7 +9,8 @@ import Foundation
 
 struct TokenResponce: Codable {
     let success: Bool
-    let expires_at, request_token: String
+    let expires_at: String
+    let request_token: String
 }
 
 struct SessionResponce: Codable {
@@ -19,6 +20,7 @@ struct SessionResponce: Codable {
     let status_message: String?
     let session_id: String?
 }
+
 struct AccountID: Codable {
     let id: Int?
     let iso639_1: String?

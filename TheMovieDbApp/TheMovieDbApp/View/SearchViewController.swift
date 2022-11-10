@@ -105,7 +105,7 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let vc = storyboard.instantiateViewController(withIdentifier: "DetailsViewController") as? DetailsViewController else { return }
-        vc.configure(mediaType: .movie, media: movies[indexPath.row], genres: genres)
+        vc.configure(mediaType: "movie", media: movies[indexPath.row], genres: genres)
         
         self.navigationController?.pushViewController(vc, animated: true)
     }

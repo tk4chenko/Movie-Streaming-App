@@ -14,10 +14,21 @@ class DetailsViewController: UIViewController {
     let viewModel = ViewModelDetailsVC()
     
     static var identifier = "DetailsViewController"
+    
     private var mediaId = Int()
-    private var isSaved = false
+    private var mediaType = String()
+    private var watchlistType = String()
     
     var arrayOfVideos = [Video]()
+    
+    private lazy var pageControl: UIPageControl = {
+        let control = UIPageControl()
+        control.translatesAutoresizingMaskIntoConstraints = false
+        control.isUserInteractionEnabled = true
+        control.currentPageIndicatorTintColor = .systemBlue
+        control.pageIndicatorTintColor = .systemGray5
+        return control
+    }()
     
     private let posterView: UIImageView = {
         let imageView = UIImageView()
@@ -89,12 +100,26 @@ class DetailsViewController: UIViewController {
         videoCollectionView.delegate = self
         videoCollectionView.dataSource = self
         
-        if isSaved == false {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(addTapped))
-        } else {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star.fill"))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(self.addTapped))
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.getWatchlist(type: watchlistType, accountId: accountId, sessionId: sessionId) { movies in
+            //            if movies.count == 0 {
+            //                self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(self.addTapped))
+            //            }
+            //
+            for movie in movies {
+                if movie.id == self.mediaId {
+                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star.fill"), style: .plain, target: self, action: #selector(self.removeTapped))
+                    return
+                    //                } else {
+                    //                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(self.addTapped))
+                    //                }
+                }
+            }
         }
-        
     }
     
     override func viewWillLayoutSubviews() {
@@ -102,7 +127,7 @@ class DetailsViewController: UIViewController {
         setupConstraint()
     }
     
-    func createLayout() -> UICollectionViewLayout {
+    private func createLayout() -> UICollectionViewLayout {
         var layout = UICollectionViewLayout()
         let spacing: CGFloat = 0
         let itemSize = NSCollectionLayoutSize(
@@ -113,7 +138,7 @@ class DetailsViewController: UIViewController {
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(view.frame.size.width / 1.77))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
+        
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .paging
         layout = UICollectionViewCompositionalLayout(section: section)
@@ -121,17 +146,32 @@ class DetailsViewController: UIViewController {
     }
     
     @objc func addTapped() {
-        viewModel.addToWatchlist(accountID: accountId, mediaType: "movie", mediaId: mediaId, sessionId: sessionId) { result, mediaType in
+        viewModel.addToWatchlist(watchlist: true, accountID: accountId, mediaType: mediaType, mediaId: mediaId, sessionId: sessionId) { result, mediaType in
             print(mediaType)
             print(result)
-            
-            self.isSaved = true
-            print(self.isSaved)
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star.fill"))
         }
     }
     
-    public func configure(mediaType: MediaType, media: Media, genres: [Genre]) {
+    @objc func removeTapped() {
+        viewModel.addToWatchlist(watchlist: false, accountID: accountId, mediaType: mediaType, mediaId: mediaId, sessionId: sessionId) { result, mediaType in
+            print(mediaType)
+            print(result)
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"))
+        }
+    }
+    
+    public func configure(mediaType: String, media: Media, genres: [Genre]) {
         mediaId = media.id
+        
+        if media.title != nil {
+            self.mediaType = "movie"
+            self.watchlistType = "movies"
+        } else {
+            self.mediaType = "tv"
+            self.watchlistType = "tv"
+        }
+        
         title = media.title ?? "" + (media.name ?? "")
         titleLabel.text = media.original_title ?? "" + (media.original_name ?? "")
         let date = media.release_date ?? "" + (media.first_air_date ?? "")
@@ -167,6 +207,7 @@ class DetailsViewController: UIViewController {
         view.addSubview(genreLabel)
         view.addSubview(overviewLabel)
         view.addSubview(videoCollectionView)
+        view.addSubview(pageControl)
         
         NSLayoutConstraint.activate([
             posterView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
@@ -193,15 +234,25 @@ class DetailsViewController: UIViewController {
             videoCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0),
             videoCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0),
             videoCollectionView.topAnchor.constraint(equalTo: overviewLabel.bottomAnchor, constant: 10),
-            videoCollectionView.heightAnchor.constraint(equalTo: videoCollectionView.widthAnchor, multiplier: 0.56)
-    
+            videoCollectionView.heightAnchor.constraint(equalTo: videoCollectionView.widthAnchor, multiplier: 0.56),
+            
+            pageControl.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
+            pageControl.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
+            pageControl.topAnchor.constraint(equalTo: videoCollectionView.bottomAnchor, constant: 0),
+            
         ])
     }
 }
 
 extension DetailsViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        self.arrayOfVideos.count
+        let count =  arrayOfVideos.count
+        if count == 1 {
+            pageControl.numberOfPages = 0
+        } else {
+            pageControl.numberOfPages = count
+        }
+        return count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -210,5 +261,14 @@ extension DetailsViewController: UICollectionViewDataSource, UICollectionViewDel
         return cell
         
     }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        pageControl.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        pageControl.currentPage = indexPath.row
+    }
+    
     
 }

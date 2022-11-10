@@ -131,11 +131,11 @@ extension MoviesViewController: UICollectionViewDelegate {
         case 0:
             let key = Array(viewModel.dictOfMovies.keys).sorted(by: <)[indexPath.section]
             let value = viewModel.dictOfMovies[key]![indexPath.row]
-            vc.configure(mediaType: .movie, media: value, genres: viewModel.arrayOfMovieGenres)
+            vc.configure(mediaType: "movie", media: value, genres: viewModel.arrayOfMovieGenres)
         case 1:
             let key = Array(viewModel.dictOfTVShows.keys).sorted(by: <)[indexPath.section]
             let value = viewModel.dictOfTVShows[key]![indexPath.row]
-            vc.configure(mediaType: .tv, media: value, genres: viewModel.arrayOfTVGenres)
+            vc.configure(mediaType: "tv", media: value, genres: viewModel.arrayOfTVGenres)
         default:
             print("no controller")
         }
