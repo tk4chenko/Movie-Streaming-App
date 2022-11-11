@@ -19,6 +19,7 @@ struct SessionResponce: Codable {
     let status_code: Int?
     let status_message: String?
     let session_id: String?
+    let guestSessionID: String?
 }
 
 struct AccountID: Codable {

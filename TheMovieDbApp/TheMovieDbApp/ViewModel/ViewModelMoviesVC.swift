@@ -98,5 +98,24 @@ class ViewModelMoviesVC {
         }
     }
     
+    func deleteSession(sessionId: String) {
+        let parameters: [String: Any] = [
+              "session_id": sessionId
+        ]
+        
+        let genresRequest = AF.request("https://api.themoviedb.org/3/authentication/session?api_key=\(apiKey)", method: .delete, parameters: parameters, encoding: JSONEncoding.default)
+        
+        genresRequest.responseDecodable(of: SessionResponce.self) { response in
+            do {
+                _ = try response.result.get()
+            }
+            catch {
+                print("error: \(error)")
+            }
+            
+        }
+    
+    }
+    
     
 }

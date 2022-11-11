@@ -87,4 +87,21 @@ class ViewModelAuthenticationVC {
     
     }
     
+    func createGuestSession(completion: @escaping (SessionResponce) -> Void) {
+        
+        let genresRequest = AF.request("https://api.themoviedb.org/3/authentication/guest_session/new?api_key=\(apiKey)", method: .get)
+        
+        genresRequest.responseDecodable(of: SessionResponce.self) { response in
+            do {
+                let data = try response.result.get()
+                completion(data)
+            }
+            catch {
+                print("error: \(error)")
+            }
+            
+        }
+    
+    }
+    
 }

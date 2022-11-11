@@ -35,6 +35,17 @@ class MoviesViewController: UIViewController {
         moviesCollectionView?.collectionViewLayout = createLayout()
         moviesCollectionView.delegate = self
         moviesCollectionView.dataSource = self
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sign out", style: .plain, target: self, action: #selector(signOut))
+    }
+    
+    @objc func signOut() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
+        vc.modalPresentationStyle = .fullScreen
+//                        self.dismiss(animated: true)
+        self.present(vc, animated: false)
+        sessionId = ""
+//        viewModel.deleteSession(sessionId: sessionId)
     }
     
     @IBAction func pressedSegment(_ sender: Any) {

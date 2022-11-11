@@ -99,24 +99,21 @@ class DetailsViewController: UIViewController {
         
         videoCollectionView.delegate = self
         videoCollectionView.dataSource = self
-        
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(self.addTapped))
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.getWatchlist(type: watchlistType, accountId: accountId, sessionId: sessionId) { movies in
-            //            if movies.count == 0 {
-            //                self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(self.addTapped))
-            //            }
-            //
+            if movies.count == 0 {
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(self.addTapped))
+            }
+            
             for movie in movies {
                 if movie.id == self.mediaId {
                     self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star.fill"), style: .plain, target: self, action: #selector(self.removeTapped))
                     return
-                    //                } else {
-                    //                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(self.addTapped))
-                    //                }
+                } else {
+                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(self.addTapped))
                 }
             }
         }
@@ -272,3 +269,4 @@ extension DetailsViewController: UICollectionViewDataSource, UICollectionViewDel
     
     
 }
+

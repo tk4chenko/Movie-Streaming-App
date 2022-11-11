@@ -14,6 +14,8 @@ class AuthenticationViewController: UIViewController {
     
     private let viewModel = ViewModelAuthenticationVC()
     
+    @IBOutlet weak var wrongLabel: UILabel!
+    @IBOutlet weak var guestSessionButton: UIButton!
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
@@ -31,6 +33,18 @@ class AuthenticationViewController: UIViewController {
         
     }
     
+    @IBAction func guestSessionPressed(_ sender: Any) {
+        viewModel.createGuestSession { session in
+            sessionId = session.guestSessionID ?? ""
+            
+            if session.success == true {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "UITabBarController")
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: false)
+            }
+        }
+    }
     @IBAction func loginPressed(_ sender: Any) {
         viewModel.createRequestToken { token in
             self.viewModel.createSessionWithLogin(username: self.username, password: self.password, requestToken: token) {
@@ -39,7 +53,7 @@ class AuthenticationViewController: UIViewController {
                         accountId = accountID.id ?? 0
                         print(accountID.id ?? 0)
                     }
-                    print(session)
+                    print(session.session_id ?? "")
                     
                     sessionId = session.session_id ?? ""
                     
@@ -49,6 +63,8 @@ class AuthenticationViewController: UIViewController {
                         vc.modalPresentationStyle = .fullScreen
 //                        self.dismiss(animated: true)
                         self.present(vc, animated: false)
+                    } else {
+                        self.wrongLabel.text = "Wrong password or username"
                     }
                 }
             }

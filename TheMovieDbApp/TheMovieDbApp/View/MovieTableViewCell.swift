@@ -69,7 +69,7 @@ class MovieTableViewCell: UITableViewCell {
         contentView.addSubview(releaseDateLabel)
         
         NSLayoutConstraint.activate([
-            posterView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 8),
+            posterView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
             posterView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.2),
             posterView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             posterView.heightAnchor.constraint(equalTo: posterView.widthAnchor, multiplier: 1.5),
