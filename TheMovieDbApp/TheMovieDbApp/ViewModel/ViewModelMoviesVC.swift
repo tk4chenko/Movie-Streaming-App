@@ -107,7 +107,8 @@ class ViewModelMoviesVC {
         
         genresRequest.responseDecodable(of: SessionResponce.self) { response in
             do {
-                _ = try response.result.get()
+                let data = try response.result.get()
+                print(data.success)
             }
             catch {
                 print("error: \(error)")

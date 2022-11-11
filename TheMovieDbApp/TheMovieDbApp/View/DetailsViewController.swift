@@ -104,16 +104,13 @@ class DetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.getWatchlist(type: watchlistType, accountId: accountId, sessionId: sessionId) { movies in
-            if movies.count == 0 {
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(self.addTapped))
-            }
+            
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(self.addTapped))
             
             for movie in movies {
                 if movie.id == self.mediaId {
                     self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star.fill"), style: .plain, target: self, action: #selector(self.removeTapped))
                     return
-                } else {
-                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(self.addTapped))
                 }
             }
         }

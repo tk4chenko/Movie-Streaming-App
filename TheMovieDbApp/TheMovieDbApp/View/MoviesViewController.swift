@@ -44,8 +44,7 @@ class MoviesViewController: UIViewController {
         vc.modalPresentationStyle = .fullScreen
 //                        self.dismiss(animated: true)
         self.present(vc, animated: false)
-        sessionId = ""
-//        viewModel.deleteSession(sessionId: sessionId)
+        viewModel.deleteSession(sessionId: sessionId)
     }
     
     @IBAction func pressedSegment(_ sender: Any) {
