@@ -20,11 +20,11 @@ class AuthenticationViewController: UIViewController {
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     
-    var username: String! {
+    private var username: String! {
         return usernameField.text
     }
     
-    var password: String! {
+    private var password: String! {
         return passwordField.text
     }
     

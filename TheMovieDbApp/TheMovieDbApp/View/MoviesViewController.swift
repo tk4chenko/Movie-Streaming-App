@@ -12,7 +12,7 @@ class MoviesViewController: UIViewController {
     @IBOutlet weak var segmentController: UISegmentedControl!
     @IBOutlet weak var moviesCollectionView: UICollectionView!
     
-    var viewModel = ViewModelMoviesVC()
+    private let viewModel = ViewModelMoviesVC()
     
     override func viewDidLoad() {
         super.viewDidLoad()

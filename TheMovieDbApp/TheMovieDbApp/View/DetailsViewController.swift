@@ -11,7 +11,7 @@ import youtube_ios_player_helper
 
 class DetailsViewController: UIViewController {
     
-    let viewModel = ViewModelDetailsVC()
+    private let viewModel = ViewModelDetailsVC()
     
     static var identifier = "DetailsViewController"
     

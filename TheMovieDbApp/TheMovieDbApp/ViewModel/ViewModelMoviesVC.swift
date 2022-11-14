@@ -13,6 +13,9 @@ class ViewModelMoviesVC {
 //    var arrayOfMovies = [Title]()
 //    var arrayOfTVShows = [Title]()
     
+    var upcoming = [Media]()
+    var trending = [Media]()
+    
     var arrayOfMovieGenres = [Genre]()
     var arrayOfTVGenres = [Genre]()
     
@@ -116,6 +119,41 @@ class ViewModelMoviesVC {
             
         }
     
+    }
+    
+    func loadTrendingMovies(completion: @escaping() -> Void) {
+        
+        let movieRequest = AF.request("https://api.themoviedb.org/3/trending/movie/day?api_key=\(apiKey)", method: .get)
+        
+        movieRequest.responseDecodable(of: MediaResponce.self) { response in
+            do {
+                self.trending = try response.result.get().results
+                                let data = try response.result.get().results
+                completion()
+            }
+            catch {
+                print("error: \(error)")
+            }
+            
+        }
+        
+    }
+    
+    func loadUpcomingMovies(completion: @escaping() -> Void) {
+        let movieRequest = AF.request("https://api.themoviedb.org/3/movie/upcoming?api_key=\(apiKey)&language=en-US&page=1", method: .get)
+        
+        movieRequest.responseDecodable(of: MediaResponce.self) { response in
+            do {
+                self.upcoming = try response.result.get().results
+//                let data = try response.result.get().results
+                completion()
+            }
+            catch {
+                print("error: \(error)")
+            }
+            
+        }
+        
     }
     
     

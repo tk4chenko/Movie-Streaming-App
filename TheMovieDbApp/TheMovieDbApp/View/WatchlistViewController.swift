@@ -9,10 +9,10 @@ import UIKit
 
 class WatchlistViewController: UIViewController {
     
-    var viewModel = ViewModelWatchlistVC()
+    private let viewModel = ViewModelWatchlistVC()
     
-    var watchlistOfMovies = [Media]()
-    var watchlistOfTVShows = [Media]()
+    private var watchlistOfMovies = [Media]()
+    private var watchlistOfTVShows = [Media]()
     
     private let segmentController: UISegmentedControl = {
         let items = ["Movies", "TShows"]
@@ -66,7 +66,7 @@ class WatchlistViewController: UIViewController {
     
     @objc func segmentTapped() {
         self.tableView.reloadData()
-        print("RELOAD!!!")
+        //        print("RELOAD!!!")
     }
     
     private func setupConstraints() {
@@ -96,7 +96,7 @@ extension WatchlistViewController: UITableViewDelegate, UITableViewDataSource {
         default:
             return 0
         }
-       
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -120,27 +120,25 @@ extension WatchlistViewController: UITableViewDelegate, UITableViewDataSource {
             
             switch self?.segmentController.selectedSegmentIndex {
             case 0:
-                self?.viewModel.removeFromWatchlist(accountID: accountId, mediaType: "movie", mediaId: self?.watchlistOfMovies[indexPath.row].id ?? 0, sessionId: sessionId) { result, mediaId in
-                self?.watchlistOfMovies.remove(at: indexPath.row)
-                print(result)
-                print(mediaId)
-                tableView.reloadData()
-            }
+                self?.viewModel.removeFromWatchlist(accountID: accountId, mediaType: "movie", mediaId: self?.watchlistOfMovies[indexPath.row].id ?? 0, sessionId: sessionId) { result , mediatId in
+                    self?.watchlistOfMovies.remove(at: indexPath.row)
+                    tableView.reloadData()
+                    print(result)
+                    print(mediatId)
+                }
             case 1:
                 self?.viewModel.removeFromWatchlist(accountID: accountId, mediaType: "tv", mediaId: self?.watchlistOfTVShows[indexPath.row].id ?? 0, sessionId: sessionId) { result, mediaId in
                     self?.watchlistOfTVShows.remove(at: indexPath.row)
+                    tableView.reloadData()
                     print(result)
                     print(mediaId)
-                    tableView.reloadData()
                 }
             default:
                 return
             }
-    
+            
         }
-        
         removeAction.backgroundColor = .red
-        
         return UISwipeActionsConfiguration(actions: [removeAction])
     }
     
