@@ -14,7 +14,7 @@ extension UICollectionView {
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
         item.contentInsets.leading = 8
         
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(0.95), heightDimension: .fractionalWidth(0.95 * 0.56)), subitems: [item])
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(0.95), heightDimension: .fractionalWidth(0.95 * 0.62)), subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
@@ -24,7 +24,7 @@ extension UICollectionView {
         
     }
     
-    func genres(headerID: String)  -> NSCollectionLayoutSection? {
+    func genres()  -> NSCollectionLayoutSection? {
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .absolute(150), heightDimension: .absolute(40)))
 //        item.contentInsets.trailing = 8
         item.contentInsets.leading = 8
@@ -36,10 +36,8 @@ extension UICollectionView {
 //        section.contentInsets.leading = 16
         section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
         
-        section.boundarySupplementaryItems = [
-            .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40)), elementKind: headerID, alignment: .topLeading)
-            
-        ]
+//        section.boundarySupplementaryItems = [
+//            .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40)), elementKind: headerID, alignment: .topLeading)]
         
         return section
     }
@@ -53,7 +51,7 @@ extension UICollectionView {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = .init(top: 0, leading: spacing, bottom: spacing, trailing: spacing)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(185), heightDimension: .absolute(300))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(185), heightDimension: .absolute(280))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
 //                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
@@ -72,4 +70,15 @@ extension UICollectionView {
         return section
     }
     
+}
+
+extension UIColor {
+    static var random: UIColor {
+        return UIColor(
+            red: .random(in: 0...1),
+            green: .random(in: 0...1),
+            blue: .random(in: 0...1),
+            alpha: 1.0
+        )
+    }
 }

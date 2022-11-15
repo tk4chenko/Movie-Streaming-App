@@ -118,11 +118,11 @@ extension MoviesViewController: UICollectionViewDataSource {
         case 0:
             let key = Array(viewModel.dictOfMovies.keys).sorted(by: <)[indexPath.section]
             let value = viewModel.dictOfMovies[key]![indexPath.row]
-            cell.configure(with: value)
+            cell.configure(color: .systemBlue, with: value)
         case 1:
             let key = Array(viewModel.dictOfTVShows.keys).sorted(by: <)[indexPath.section]
             let value = viewModel.dictOfTVShows[key]![indexPath.row]
-            cell.configure(with: value)
+            cell.configure(color: .systemBlue, with: value)
         default:
             return UICollectionViewCell()
         }

@@ -41,7 +41,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 6
-        view.backgroundColor = .systemBlue
+//        view.backgroundColor = .systemBlue
         return view
     }()
     
@@ -57,7 +57,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        configureShadow()
+//        configureShadow()
         setupConstraint()
     }
     
@@ -69,10 +69,11 @@ class MovieCollectionViewCell: UICollectionViewCell {
         container.layer.cornerRadius = 6
     }
     
-    public func configure(with title: Media) {
+    public func configure(color: UIColor, with title: Media) {
+        scoreView.backgroundColor = color
         scoreLabel.text = String(Int(title.vote_average * 10)) + "%"
         titleLabel.text = String(title.title ?? "" + (title.name ?? ""))
-        guard let url = URL(string: "https://image.tmdb.org/t/p/w500" + (title.poster_path ?? "")) else { return }
+        guard let url = URL(string: "https://image.tmdb.org/t/p/original" + (title.poster_path ?? "")) else { return }
         posterView.sd_setImage(with: url, completed: nil)
     }
     

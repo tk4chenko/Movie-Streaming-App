@@ -13,7 +13,7 @@ class GenreCell: UICollectionViewCell {
     
     private let container: UIView = {
         let view = UIView()
-        view.backgroundColor = .red
+        view.backgroundColor = .systemRed
         
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -25,7 +25,7 @@ class GenreCell: UICollectionViewCell {
         label.numberOfLines = 1
         label.textAlignment = .center
         label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         return label
     }()
     

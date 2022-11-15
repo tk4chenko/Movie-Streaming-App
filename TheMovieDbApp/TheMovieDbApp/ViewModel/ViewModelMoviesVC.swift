@@ -15,6 +15,7 @@ class ViewModelMoviesVC {
     
     var upcoming = [Media]()
     var trending = [Media]()
+    var topRated = [Media]()
     
     var arrayOfMovieGenres = [Genre]()
     var arrayOfTVGenres = [Genre]()
@@ -128,7 +129,7 @@ class ViewModelMoviesVC {
         movieRequest.responseDecodable(of: MediaResponce.self) { response in
             do {
                 self.trending = try response.result.get().results
-                                let data = try response.result.get().results
+//                                let data = try response.result.get().results
                 completion()
             }
             catch {
@@ -155,6 +156,25 @@ class ViewModelMoviesVC {
         }
         
     }
+    
+    func loadTopRated(completion: @escaping() -> Void) {
+        
+        let genresRequest = AF.request("https://api.themoviedb.org/3/movie/top_rated?api_key=\(apiKey)&language=en-US&page=1", method: .get)
+        
+        genresRequest.responseDecodable(of: MediaResponce.self) { response in
+            do {
+//                self.arrayOfMoviesWatchlist = try response.result.get().results
+                self.topRated = try response.result.get().results
+                completion()
+            }
+            catch {
+                print("error: \(error)")
+            }
+            
+        }
+    
+    }
+    
     
     
 }

@@ -97,7 +97,7 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell {
-            cell.configure(with: movies[indexPath.row])
+            cell.configure(color: .systemBlue, with: movies[indexPath.row])
             return cell
         }
         return UICollectionViewCell()

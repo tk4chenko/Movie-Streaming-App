@@ -8,7 +8,7 @@
 import UIKit
 
 class CompositionalLayoutControllerViewController: UIViewController {
-
+    
     let viewModel = ViewModelMoviesVC()
     
     var genres = [Genre]()
@@ -31,6 +31,10 @@ class CompositionalLayoutControllerViewController: UIViewController {
         }
         
         viewModel.loadTrendingMovies {
+            self.movieCollectionView.reloadData()
+        }
+        
+        viewModel.loadTopRated {
             self.movieCollectionView.reloadData()
         }
         
@@ -57,9 +61,11 @@ class CompositionalLayoutControllerViewController: UIViewController {
         return UICollectionViewCompositionalLayout { (sectionNumber, enviroment) -> NSCollectionLayoutSection? in
             
             if sectionNumber ==  0 {
-                return self.movieCollectionView.trendingMovies(headerID: self.categoryHeaderID)
+                return self.movieCollectionView.genres()
             } else if sectionNumber == 1 {
-                return self.movieCollectionView.genres(headerID: self.categoryHeaderID)
+                return self.movieCollectionView.trendingMovies(headerID: self.categoryHeaderID)
+            } else if sectionNumber == 2 {
+                return self.movieCollectionView.upcoming(headerID: self.categoryHeaderID)
             } else {
                 return self.movieCollectionView.upcoming(headerID: self.categoryHeaderID)
             }
@@ -76,27 +82,38 @@ extension CompositionalLayoutControllerViewController: UICollectionViewDataSourc
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: Header.headerID, for: indexPath) as! Header
         
         if indexPath.section == 0 {
-            header.label.text = "Trending movies"
+            //            header.label.text = "Genres"
+            //            header.label.textColor = .gray
         } else if indexPath.section == 1 {
-            header.label.text = "Genres"
-        } else {
+            header.label.text = "Trending movies"
+            header.label.textColor = .systemPink
+           
+            
+        } else if indexPath.section ==  2{
             header.label.text = "Upcoming movies"
+            header.label.textColor = .systemBlue
+            
+        } else {
+            header.label.text = "Top Rated Movies"
+            header.label.textColor = .systemOrange
         }
         
         return header
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 3
+        return 4
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
-            return viewModel.trending.count
-        } else if section == 1 {
             return genres.count
+        } else if section == 1 {
+            return viewModel.trending.count
         } else if section == 2 {
             return viewModel.upcoming.count
+        } else if section == 3 {
+            return viewModel.topRated.count
         }
         return 0
     }
@@ -104,31 +121,35 @@ extension CompositionalLayoutControllerViewController: UICollectionViewDataSourc
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = UICollectionViewCell()
         if indexPath.section == 0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrendingCell.identifier, for: indexPath) as! TrendingCell
-            cell.configure(with: viewModel.trending[indexPath.row])
-            return cell
-        } else if indexPath.section == 1 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCell.identifier, for: indexPath) as! GenreCell
             cell.configure(with: genres[indexPath.row])
             return cell
+        } else if indexPath.section == 1 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrendingCell.identifier, for: indexPath) as! TrendingCell
+            cell.configure(with: viewModel.trending[indexPath.row])
+            return cell
         } else if indexPath.section == 2 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as! MovieCollectionViewCell
-            cell.configure(with: viewModel.upcoming[indexPath.row])
+            cell.configure(color: .systemBlue, with: viewModel.upcoming[indexPath.row])
+            return cell
+        } else if indexPath.section == 3 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as! MovieCollectionViewCell
+            cell.configure(color: .systemOrange, with: viewModel.topRated[indexPath.row])
             return cell
         }
         return cell
     }
     
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//
-//        if indexPath.section == 1 {
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            guard let vc = storyboard.instantiateViewController(withIdentifier: "DetailsViewController") as? DetailsViewController else { return }
-//            vc.configure(genre: movieGenres[indexPath.row])
-//            self.navigationController?.pushViewController(vc, animated: true)
-//        }
-//
-//    }
+    //    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    //
+    //        if indexPath.section == 1 {
+    //            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+    //            guard let vc = storyboard.instantiateViewController(withIdentifier: "DetailsViewController") as? DetailsViewController else { return }
+    //            vc.configure(genre: movieGenres[indexPath.row])
+    //            self.navigationController?.pushViewController(vc, animated: true)
+    //        }
+    //
+    //    }
     
 }
 
