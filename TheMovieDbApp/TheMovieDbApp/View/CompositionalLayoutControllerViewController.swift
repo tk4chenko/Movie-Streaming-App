@@ -48,6 +48,16 @@ class CompositionalLayoutControllerViewController: UIViewController {
         movieCollectionView.register(GenreCell.self, forCellWithReuseIdentifier: GenreCell.identifier)
         
         movieCollectionView.register(Header.self, forSupplementaryViewOfKind: categoryHeaderID, withReuseIdentifier: Header.headerID)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sign out", style: .plain, target: self, action: #selector(signOut))
+    }
+    
+    @objc func signOut() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
+        vc.modalPresentationStyle = .fullScreen
+        //                        self.dismiss(animated: true)
+        self.present(vc, animated: false)
+        viewModel.deleteSession(sessionId: sessionId)
     }
     
     override func viewDidLayoutSubviews() {
@@ -87,7 +97,7 @@ extension CompositionalLayoutControllerViewController: UICollectionViewDataSourc
         } else if indexPath.section == 1 {
             header.label.text = "Trending movies"
             header.label.textColor = .systemPink
-           
+            
             
         } else if indexPath.section ==  2{
             header.label.text = "Upcoming movies"
@@ -140,16 +150,27 @@ extension CompositionalLayoutControllerViewController: UICollectionViewDataSourc
         return cell
     }
     
-    //    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    //
-    //        if indexPath.section == 1 {
-    //            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-    //            guard let vc = storyboard.instantiateViewController(withIdentifier: "DetailsViewController") as? DetailsViewController else { return }
-    //            vc.configure(genre: movieGenres[indexPath.row])
-    //            self.navigationController?.pushViewController(vc, animated: true)
-    //        }
-    //
-    //    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if indexPath.section == 0 {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            guard let vc = storyboard.instantiateViewController(withIdentifier: AllMoviesViewController.identifier) as? AllMoviesViewController else { return }
+            vc.configure(genre: genres[indexPath.row])
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else if indexPath.section == 1 {
+            let vc = DetailsViewController()
+            vc.configure(mediaType: "movie", media: viewModel.trending[indexPath.row], genres: viewModel.arrayOfMovieGenres)
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else if indexPath.section == 2 {
+            let vc = DetailsViewController()
+            vc.configure(mediaType: "movie", media: viewModel.upcoming[indexPath.row], genres: viewModel.arrayOfMovieGenres)
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else if indexPath.section == 3 {
+            let vc = DetailsViewController()
+            vc.configure(mediaType: "movie", media: viewModel.topRated[indexPath.row], genres: viewModel.arrayOfMovieGenres)
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
     
 }
 

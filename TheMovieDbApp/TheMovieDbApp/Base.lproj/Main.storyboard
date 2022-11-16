@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zFZ-OP-WWw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ghz-s7-Z8b">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
@@ -68,7 +68,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1578" y="2450"/>
+            <point key="canvasLocation" x="-2640" y="2450"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="jki-ut-XsI">
@@ -112,11 +112,12 @@
                         <viewLayoutGuide key="safeArea" id="MmR-RU-MUT"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Movies" image="film" catalog="system" id="n23-eO-qQU"/>
                     <navigationItem key="navigationItem" title="Movies" id="x8b-XO-vOf"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m6l-CK-U8T" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3005.3435114503814" y="2396.4788732394368"/>
+            <point key="canvasLocation" x="-1549" y="2450"/>
         </scene>
         <!--Details View Controller-->
         <scene sceneID="muw-es-F8B">
@@ -243,12 +244,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JDm-Vx-IjR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1577" y="1691"/>
+            <point key="canvasLocation" x="-2639" y="1691"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Discover-->
         <scene sceneID="PvB-2Y-wRI">
             <objects>
-                <tabBarController storyboardIdentifier="UITabBarController" automaticallyAdjustsScrollViewInsets="NO" id="O4h-1b-HNt" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="UITabBarController" title="Discover" automaticallyAdjustsScrollViewInsets="NO" id="O4h-1b-HNt" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="k8L-y0-Tlv">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
@@ -256,7 +257,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="94Z-AZ-2fv" kind="relationship" relationship="viewControllers" id="zu6-wc-UxW"/>
+                        <segue destination="zFZ-OP-WWw" kind="relationship" relationship="viewControllers" id="F8k-xo-bZe"/>
                         <segue destination="fOP-Po-D8U" kind="relationship" relationship="viewControllers" id="c99-05-Lqg"/>
                         <segue destination="xAp-ae-lJx" kind="relationship" relationship="viewControllers" id="NNa-gJ-wsA"/>
                     </connections>
@@ -322,10 +323,26 @@
             </objects>
             <point key="canvasLocation" x="1148" y="878"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--All Movies View Controller-->
+        <scene sceneID="K6O-sJ-EbZ">
+            <objects>
+                <viewController storyboardIdentifier="AllMoviesViewController" id="0b7-nM-2oe" customClass="AllMoviesViewController" customModule="TheMovieDbApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yeJ-gC-aYM">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="6xJ-Tb-5bN"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7c7-eY-V6l" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3004" y="3125"/>
+        </scene>
+        <!--Discover-->
         <scene sceneID="vdg-LZ-0ek">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zFZ-OP-WWw" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Discover" image="film" catalog="system" id="jfS-me-3yi"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="noc-fr-srE">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
@@ -338,7 +355,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KSL-Kt-sqk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2078.6259541984732" y="2396.4788732394368"/>
+            <point key="canvasLocation" x="-1550" y="1691"/>
         </scene>
     </scenes>
     <resources>

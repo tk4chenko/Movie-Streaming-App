@@ -13,8 +13,8 @@ class GenreCell: UICollectionViewCell {
     
     private let container: UIView = {
         let view = UIView()
-        view.backgroundColor = .systemRed
-        
+        view.backgroundColor = .red
+        view.layer.cornerRadius = 20
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -32,7 +32,7 @@ class GenreCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        container.layer.cornerRadius = container.frame.height / 2
+        
         contentView.addSubview(container)
         container.addSubview(titleLabel)
         container.frame = contentView.bounds

@@ -43,6 +43,19 @@ class ViewModelMoviesVC {
         }
     }
     
+    func loadMovieByGenre2(page: Int, genre: Int, completion: @escaping ([Media]) -> Void) {
+                let movieRequest = AF.request("https://api.themoviedb.org/3/discover/movie?api_key=\(apiKey)&language=en-US&sort_by=popularity.desc&include_adult=false&page=\(page)&include_video=false&with_genres=\(genre)&with_watch_monetization_types=flatrate", method: .get)
+                
+                movieRequest.responseDecodable(of: MediaResponce.self) { responce in
+                    do {
+                        let data = try responce.result.get().results
+                        completion(data)
+                    } catch {
+                        print("error: \(error)")
+                    }
+        }
+    }
+    
     func loadTvByGenre(completion: @escaping(()->())){
         
         loadGenresforTV { genres in
