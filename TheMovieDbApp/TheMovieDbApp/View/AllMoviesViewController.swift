@@ -11,11 +11,13 @@ class AllMoviesViewController: UIViewController {
     
     static var identifier = "AllMoviesViewController"
 
-    var currentPage = 1
-    var totalPages = 3
-    var genreId = Int()
+    private var currentPage = 1
+    private var totalPages = 3
+    private var genreId = Int()
+    private var mediaType = String()
+    private var mediaArray = [Media]()
     
-    let viewModel = ViewModelMoviesVC()
+    private let viewModel = ViewModelMoviesVC()
     
     var movieCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -23,19 +25,19 @@ class AllMoviesViewController: UIViewController {
         layout.itemSize = CGSize(width: UIScreen.main.bounds.width/2 - 25, height: (UIScreen.main.bounds.width/2 - 25) * 1.68)
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.translatesAutoresizingMaskIntoConstraints = false
-//        cv.register(UINib(nibName: "MyCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MyCollectionViewCell")
         cv.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: MovieCollectionViewCell.identifier)
         return cv
     }()
     
-    var arrayOfMovies = [Media]()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        viewModel.loadGenresForMedia(type: mediaType) {
+            self.movieCollectionView.reloadData()
+        }
         
         movieCollectionView.delegate = self
         movieCollectionView.dataSource = self
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -52,15 +54,13 @@ class AllMoviesViewController: UIViewController {
         ])
     }
     
-    public func configure(genre: Genre) {
+    public func configure(type: String, genre: Genre) {
+        mediaType = type
         title = genre.name
         genreId = genre.id
-//        viewModel.loadMovieByGenre(page: 1, genre: genreId) { movies in
-//            self.arrayOfMovies = movies
-//            self.movieCollectionView.reloadData()
-//        }
-        viewModel.loadMovieByGenre2(page: 1, genre: genreId) { movies in
-            self.arrayOfMovies = movies
+
+        viewModel.loadMediaByGenre(type: mediaType, page: 1, genre: genreId) { media in
+            self.mediaArray = media
             self.movieCollectionView.reloadData()
         }
     }
@@ -71,27 +71,27 @@ extension AllMoviesViewController: UICollectionViewDataSource, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 
-        if currentPage < totalPages && indexPath.row == arrayOfMovies.count - 1 {
+        if currentPage < totalPages && indexPath.row == mediaArray.count - 1 {
             currentPage += 1
-            viewModel.loadMovieByGenre2(page: currentPage, genre: genreId) { movies in
-                self.arrayOfMovies.append(contentsOf: movies)
+            viewModel.loadMediaByGenre(type: mediaType, page: currentPage, genre: genreId) { movies in
+                self.mediaArray.append(contentsOf: movies)
                     collectionView.reloadData()
                 }
             }
         }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        arrayOfMovies.count
+        mediaArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell else { return UICollectionViewCell() }
-        cell.configure(color: .red, with: arrayOfMovies[indexPath.row])
+        cell.configure(color: .red, with: mediaArray[indexPath.row])
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = DetailsViewController()
-        vc.configure(mediaType: "movie", media: arrayOfMovies[indexPath.row], genres: viewModel.arrayOfMovieGenres)
+        vc.configure(mediaType: mediaType, media: mediaArray[indexPath.row], genres: viewModel.genres)
         self.navigationController?.pushViewController(vc, animated: true)
     }
 

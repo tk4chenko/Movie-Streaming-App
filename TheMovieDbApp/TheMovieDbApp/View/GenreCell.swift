@@ -32,11 +32,25 @@ class GenreCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+        setupConstraints()
+    }
+    
+    private func setupConstraints() {
         contentView.addSubview(container)
         container.addSubview(titleLabel)
-        container.frame = contentView.bounds
-        titleLabel.frame = container.bounds
+        
+        NSLayoutConstraint.activate([
+            container.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 0),
+            container.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 0),
+            container.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
+            container.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
+
+            titleLabel.leftAnchor.constraint(equalTo: container.leftAnchor, constant: 8),
+            titleLabel.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -8),
+            titleLabel.topAnchor.constraint(equalTo: container.topAnchor, constant: 10)
+        
+        ])
+        
     }
     
     public func configure(with genre: Genre) {
@@ -44,3 +58,4 @@ class GenreCell: UICollectionViewCell {
         titleLabel.text = genre.name
     }
 }
+

@@ -9,9 +9,15 @@ import UIKit
 
 class CompositionalLayoutControllerViewController: UIViewController {
     
-    let viewModel = ViewModelMoviesVC()
+    private let viewModel = ViewModelMoviesVC()
     
-    var genres = [Genre]()
+    private var selectedItem: String! {
+        if segmentController.selectedSegmentIndex == 0 {
+            return "movie"
+        } else {
+            return "tv"
+        }
+    }
     
     private lazy var movieCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout())
@@ -29,22 +35,10 @@ class CompositionalLayoutControllerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.loadGenresforMovies { genres in
-            self.genres = genres
-            self.movieCollectionView.reloadData()
-        }
         
-        viewModel.loadUpcomingMovies {
-            self.movieCollectionView.reloadData()
-        }
+        segmentController.addTarget(self, action: #selector(segmentTapped), for: .valueChanged)
         
-        viewModel.loadTrendingMovies {
-            self.movieCollectionView.reloadData()
-        }
-        
-        viewModel.loadTopRated {
-            self.movieCollectionView.reloadData()
-        }
+        fetchData(type: selectedItem)
         
         movieCollectionView.delegate = self
         movieCollectionView.dataSource = self
@@ -63,7 +57,6 @@ class CompositionalLayoutControllerViewController: UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
         vc.modalPresentationStyle = .fullScreen
-        //                        self.dismiss(animated: true)
         self.present(vc, animated: false)
         viewModel.deleteSession(sessionId: sessionId)
     }
@@ -71,22 +64,41 @@ class CompositionalLayoutControllerViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         setupConstraints()
-//        movieCollectionView.frame = view.bounds
+    }
+    
+    @objc func segmentTapped() {
+        self.movieCollectionView.reloadData()
+        fetchData(type: selectedItem)
+    }
+    
+    private func fetchData(type: String) {
+        viewModel.loadGenresForMedia(type: type) {
+            self.movieCollectionView.reloadData()
+        }
+        viewModel.loadTrending(type: type) {
+            self.movieCollectionView.reloadData()
+        }
+        viewModel.loadUpcoming(type: type) {
+            self.movieCollectionView.reloadData()
+        }
+        viewModel.loadTopRated(type: type) {
+            self.movieCollectionView.reloadData()
+        }
     }
     
     private func setupConstraints() {
         view.addSubview(movieCollectionView)
         view.addSubview(segmentController)
+        
         NSLayoutConstraint.activate([
             segmentController.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0),
             segmentController.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0),
             segmentController.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
             
-            movieCollectionView.topAnchor.constraint(equalTo: segmentController.bottomAnchor, constant: 5),
+            movieCollectionView.topAnchor.constraint(equalTo: segmentController.bottomAnchor, constant: 0),
             movieCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0),
             movieCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0),
             movieCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
-        
         ])
     }
     
@@ -115,20 +127,28 @@ extension CompositionalLayoutControllerViewController: UICollectionViewDataSourc
         
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: Header.headerID, for: indexPath) as! Header
         
+        let mediaType: String = {
+            if self.segmentController.selectedSegmentIndex == 0 {
+                return "Movies"
+            } else {
+                return "TVShows"
+            }
+        }()
+        
         if indexPath.section == 0 {
-                header.label.text = "Genres"
-                header.label.textColor = .gray
+            header.label.text = "Genres"
+            header.label.textColor = .red
         } else if indexPath.section == 1 {
-            header.label.text = "Trending movies"
+            header.label.text = "Trending \(mediaType)"
             header.label.textColor = .systemPink
             
             
         } else if indexPath.section ==  2{
-            header.label.text = "Upcoming movies"
+            header.label.text = "Popular \(mediaType)"
             header.label.textColor = .systemBlue
             
         } else {
-            header.label.text = "Top Rated Movies"
+            header.label.text = "Top Rated \(mediaType)"
             header.label.textColor = .systemOrange
         }
         
@@ -140,8 +160,9 @@ extension CompositionalLayoutControllerViewController: UICollectionViewDataSourc
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
         if section == 0 {
-            return genres.count
+            return viewModel.genres.count
         } else if section == 1 {
             return viewModel.trending.count
         } else if section == 2 {
@@ -154,9 +175,10 @@ extension CompositionalLayoutControllerViewController: UICollectionViewDataSourc
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = UICollectionViewCell()
+        
         if indexPath.section == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCell.identifier, for: indexPath) as! GenreCell
-            cell.configure(with: genres[indexPath.row])
+            cell.configure(with: viewModel.genres[indexPath.row])
             return cell
         } else if indexPath.section == 1 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrendingCell.identifier, for: indexPath) as! TrendingCell
@@ -179,22 +201,21 @@ extension CompositionalLayoutControllerViewController: UICollectionViewDataSourc
         if indexPath.section == 0 {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             guard let vc = storyboard.instantiateViewController(withIdentifier: AllMoviesViewController.identifier) as? AllMoviesViewController else { return }
-            vc.configure(genre: genres[indexPath.row])
+            vc.configure(type: selectedItem, genre: viewModel.genres[indexPath.row])
             self.navigationController?.pushViewController(vc, animated: true)
         } else if indexPath.section == 1 {
             let vc = DetailsViewController()
-            vc.configure(mediaType: "movie", media: viewModel.trending[indexPath.row], genres: viewModel.arrayOfMovieGenres)
+            vc.configure(mediaType: selectedItem, media: viewModel.trending[indexPath.row], genres: viewModel.genres)
             self.navigationController?.pushViewController(vc, animated: true)
         } else if indexPath.section == 2 {
             let vc = DetailsViewController()
-            vc.configure(mediaType: "movie", media: viewModel.upcoming[indexPath.row], genres: viewModel.arrayOfMovieGenres)
+            vc.configure(mediaType: selectedItem, media: viewModel.upcoming[indexPath.row], genres: viewModel.genres)
             self.navigationController?.pushViewController(vc, animated: true)
         } else if indexPath.section == 3 {
             let vc = DetailsViewController()
-            vc.configure(mediaType: "movie", media: viewModel.topRated[indexPath.row], genres: viewModel.arrayOfMovieGenres)
+            vc.configure(mediaType: selectedItem, media: viewModel.topRated[indexPath.row], genres: viewModel.genres)
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
     
 }
-

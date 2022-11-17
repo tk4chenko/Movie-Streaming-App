@@ -167,10 +167,10 @@
 				047B24AF291820AF00F545B5 /* VideoCollectionViewCell.swift */,
 				0429B6202916B4CA00228598 /* SearchViewController.swift */,
 				0498A54B29115C9600A70DCA /* AuthenticationViewController.swift */,
-				0471EE37291033B20087EE1E /* MoviesViewController.swift */,
 				046754952915A3D000EC8098 /* DetailsViewController.swift */,
-				04BA20B72919701A007AAC11 /* WatchlistViewController.swift */,
 				040817132922B3D300B90BAA /* CompositionalLayoutControllerViewController.swift */,
+				04BA20B72919701A007AAC11 /* WatchlistViewController.swift */,
+				0471EE37291033B20087EE1E /* MoviesViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";

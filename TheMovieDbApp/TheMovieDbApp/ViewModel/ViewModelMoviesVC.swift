@@ -10,19 +10,50 @@ import Alamofire
 
 class ViewModelMoviesVC {
     
-//    var arrayOfMovies = [Title]()
-//    var arrayOfTVShows = [Title]()
+    //    var arrayOfMovies = [Title]()
+    //    var arrayOfTVShows = [Title]()
     
     var upcoming = [Media]()
     var trending = [Media]()
     var topRated = [Media]()
     
+    var dictOfMovies = [String: [Media]]()
+    var dictOfTVShows = [String: [Media]]()
     var arrayOfMovieGenres = [Genre]()
     var arrayOfTVGenres = [Genre]()
     
-    var dictOfMovies = [String: [Media]]()
-    var dictOfTVShows = [String: [Media]]()
-
+    var genres = [Genre]()
+    
+    
+    func loadGenresForMedia(type: String, completion: @escaping () -> Void) {
+        
+        let genresRequest = AF.request("https://api.themoviedb.org/3/genre/\(type)/list?api_key=\(apiKey)&language=en-US", method: .get)
+        
+        genresRequest.responseDecodable(of: Genres.self) { response in
+            do {
+                self.genres = try response.result.get().genres
+//                let data = try response.result.get().genres
+                completion()
+            }
+            catch {
+                print("error: \(error)")
+            }
+            
+        }
+    }
+    
+    func loadMediaByGenre(type: String, page: Int, genre: Int, completion: @escaping ([Media]) -> Void) {
+        let movieRequest = AF.request("https://api.themoviedb.org/3/discover/\(type)?api_key=\(apiKey)&language=en-US&sort_by=popularity.desc&include_adult=false&page=\(page)&include_video=false&with_genres=\(genre)&with_watch_monetization_types=flatrate", method: .get)
+        
+        movieRequest.responseDecodable(of: MediaResponce.self) { responce in
+            do {
+                let data = try responce.result.get().results
+                completion(data)
+            } catch {
+                print("error: \(error)")
+            }
+        }
+    }
     
     func loadMovieByGenre(completion: @escaping () -> Void) {
         loadGenresforMovies { genres in
@@ -43,19 +74,6 @@ class ViewModelMoviesVC {
         }
     }
     
-    func loadMovieByGenre2(page: Int, genre: Int, completion: @escaping ([Media]) -> Void) {
-                let movieRequest = AF.request("https://api.themoviedb.org/3/discover/movie?api_key=\(apiKey)&language=en-US&sort_by=popularity.desc&include_adult=false&page=\(page)&include_video=false&with_genres=\(genre)&with_watch_monetization_types=flatrate", method: .get)
-                
-                movieRequest.responseDecodable(of: MediaResponce.self) { responce in
-                    do {
-                        let data = try responce.result.get().results
-                        completion(data)
-                    } catch {
-                        print("error: \(error)")
-                    }
-        }
-    }
-    
     func loadTvByGenre(completion: @escaping(()->())){
         
         loadGenresforTV { genres in
@@ -66,7 +84,7 @@ class ViewModelMoviesVC {
                 request.responseDecodable(of: MediaResponce.self) { response in
                     do {
                         let data = try response.result.get().results
-//                        self.arrayOfTVShows = try response.result.get().results
+                        //                        self.arrayOfTVShows = try response.result.get().results
                         self.dictOfTVShows[genre.name] = data
                         completion()
                     }
@@ -117,7 +135,7 @@ class ViewModelMoviesVC {
     
     func deleteSession(sessionId: String) {
         let parameters: [String: Any] = [
-              "session_id": sessionId
+            "session_id": sessionId
         ]
         
         let genresRequest = AF.request("https://api.themoviedb.org/3/authentication/session?api_key=\(apiKey)", method: .delete, parameters: parameters, encoding: JSONEncoding.default)
@@ -132,33 +150,16 @@ class ViewModelMoviesVC {
             }
             
         }
-    
+        
     }
     
-    func loadTrendingMovies(completion: @escaping() -> Void) {
+    func loadTrending(type: String, completion: @escaping() -> Void) {
         
-        let movieRequest = AF.request("https://api.themoviedb.org/3/trending/movie/day?api_key=\(apiKey)", method: .get)
+        let movieRequest = AF.request("https://api.themoviedb.org/3/trending/\(type)/day?api_key=\(apiKey)", method: .get)
         
         movieRequest.responseDecodable(of: MediaResponce.self) { response in
             do {
                 self.trending = try response.result.get().results
-//                                let data = try response.result.get().results
-                completion()
-            }
-            catch {
-                print("error: \(error)")
-            }
-            
-        }
-        
-    }
-    
-    func loadUpcomingMovies(completion: @escaping() -> Void) {
-        let movieRequest = AF.request("https://api.themoviedb.org/3/movie/upcoming?api_key=\(apiKey)&language=en-US&page=1", method: .get)
-        
-        movieRequest.responseDecodable(of: MediaResponce.self) { response in
-            do {
-                self.upcoming = try response.result.get().results
 //                let data = try response.result.get().results
                 completion()
             }
@@ -170,13 +171,30 @@ class ViewModelMoviesVC {
         
     }
     
-    func loadTopRated(completion: @escaping() -> Void) {
+    func loadUpcoming(type: String, completion: @escaping() -> Void) {
+        let movieRequest = AF.request("https://api.themoviedb.org/3/\(type)/popular?api_key=\(apiKey)&language=en-US", method: .get)
         
-        let genresRequest = AF.request("https://api.themoviedb.org/3/movie/top_rated?api_key=\(apiKey)&language=en-US&page=1", method: .get)
+        movieRequest.responseDecodable(of: MediaResponce.self) { response in
+            do {
+                self.upcoming = try response.result.get().results
+                //                let data = try response.result.get().results
+                completion()
+            }
+            catch {
+                print("error: \(error)")
+            }
+            
+        }
+        
+    }
+    
+    func loadTopRated(type: String, completion: @escaping() -> Void) {
+        
+        let genresRequest = AF.request("https://api.themoviedb.org/3/\(type)/top_rated?api_key=\(apiKey)&language=en-US&page=1", method: .get)
         
         genresRequest.responseDecodable(of: MediaResponce.self) { response in
             do {
-//                self.arrayOfMoviesWatchlist = try response.result.get().results
+                //                self.arrayOfMoviesWatchlist = try response.result.get().results
                 self.topRated = try response.result.get().results
                 completion()
             }
@@ -185,9 +203,7 @@ class ViewModelMoviesVC {
             }
             
         }
-    
+        
     }
-    
-    
     
 }
