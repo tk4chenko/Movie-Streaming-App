@@ -24,7 +24,7 @@ extension UICollectionView {
         
     }
     
-    func genres()  -> NSCollectionLayoutSection? {
+    func genres(headerID: String)  -> NSCollectionLayoutSection? {
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .absolute(150), heightDimension: .absolute(40)))
 //        item.contentInsets.trailing = 8
         item.contentInsets.leading = 8
@@ -36,8 +36,8 @@ extension UICollectionView {
 //        section.contentInsets.leading = 16
         section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
         
-//        section.boundarySupplementaryItems = [
-//            .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40)), elementKind: headerID, alignment: .topLeading)]
+        section.boundarySupplementaryItems = [
+            .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40)), elementKind: headerID, alignment: .topLeading)]
         
         return section
     }

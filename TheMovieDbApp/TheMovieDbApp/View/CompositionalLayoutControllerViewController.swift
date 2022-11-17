@@ -19,6 +19,14 @@ class CompositionalLayoutControllerViewController: UIViewController {
         return collectionView
     }()
     
+    private let segmentController: UISegmentedControl = {
+        let items = ["Movies", "TShows"]
+        let control = UISegmentedControl(items: items)
+        control.translatesAutoresizingMaskIntoConstraints = false
+        control.selectedSegmentIndex = 0
+        return control
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.loadGenresforMovies { genres in
@@ -62,8 +70,24 @@ class CompositionalLayoutControllerViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        setupConstraints()
+//        movieCollectionView.frame = view.bounds
+    }
+    
+    private func setupConstraints() {
         view.addSubview(movieCollectionView)
-        movieCollectionView.frame = view.bounds
+        view.addSubview(segmentController)
+        NSLayoutConstraint.activate([
+            segmentController.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0),
+            segmentController.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0),
+            segmentController.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            
+            movieCollectionView.topAnchor.constraint(equalTo: segmentController.bottomAnchor, constant: 5),
+            movieCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0),
+            movieCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0),
+            movieCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+        
+        ])
     }
     
     
@@ -71,7 +95,7 @@ class CompositionalLayoutControllerViewController: UIViewController {
         return UICollectionViewCompositionalLayout { (sectionNumber, enviroment) -> NSCollectionLayoutSection? in
             
             if sectionNumber ==  0 {
-                return self.movieCollectionView.genres()
+                return self.movieCollectionView.genres(headerID: self.categoryHeaderID)
             } else if sectionNumber == 1 {
                 return self.movieCollectionView.trendingMovies(headerID: self.categoryHeaderID)
             } else if sectionNumber == 2 {
@@ -92,8 +116,8 @@ extension CompositionalLayoutControllerViewController: UICollectionViewDataSourc
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: Header.headerID, for: indexPath) as! Header
         
         if indexPath.section == 0 {
-            //            header.label.text = "Genres"
-            //            header.label.textColor = .gray
+                header.label.text = "Genres"
+                header.label.textColor = .gray
         } else if indexPath.section == 1 {
             header.label.text = "Trending movies"
             header.label.textColor = .systemPink
