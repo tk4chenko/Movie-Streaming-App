@@ -26,15 +26,19 @@ class CompositionalLayoutControllerViewController: UIViewController {
     }()
     
     private let segmentController: UISegmentedControl = {
-        let items = ["Movies", "TShows"]
+        let items = ["Movies", "TVShows"]
         let control = UISegmentedControl(items: items)
         control.translatesAutoresizingMaskIntoConstraints = false
         control.selectedSegmentIndex = 0
+        control.backgroundColor = .clear
+        control.tintColor = .red
         return control
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        segmentController.setupSegment()
         
         segmentController.addTarget(self, action: #selector(segmentTapped), for: .valueChanged)
         
@@ -67,6 +71,7 @@ class CompositionalLayoutControllerViewController: UIViewController {
     }
     
     @objc func segmentTapped() {
+        self.segmentController.setupSegment()
         self.movieCollectionView.reloadData()
         fetchData(type: selectedItem)
     }
