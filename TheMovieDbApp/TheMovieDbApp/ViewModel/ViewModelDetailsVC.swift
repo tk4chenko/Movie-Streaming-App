@@ -8,11 +8,6 @@
 import Foundation
 import Alamofire
 
-enum MediaType: String{
-    case movie
-    case tv
-}
-
 class ViewModelDetailsVC {
     
     var arrayOfViedos = [Video]()

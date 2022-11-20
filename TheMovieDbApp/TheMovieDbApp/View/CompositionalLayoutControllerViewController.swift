@@ -30,15 +30,12 @@ class CompositionalLayoutControllerViewController: UIViewController {
         let control = UISegmentedControl(items: items)
         control.translatesAutoresizingMaskIntoConstraints = false
         control.selectedSegmentIndex = 0
-        control.backgroundColor = .clear
-        control.tintColor = .red
+        control.setupSegment()
         return control
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        segmentController.setupSegment()
         
         segmentController.addTarget(self, action: #selector(segmentTapped), for: .valueChanged)
         
@@ -77,18 +74,37 @@ class CompositionalLayoutControllerViewController: UIViewController {
     }
     
     private func fetchData(type: String) {
-        viewModel.loadGenresForMedia(type: type) {
+        
+        viewModel.fetchGenres(type: type) {
             self.movieCollectionView.reloadData()
         }
-        viewModel.loadTrending(type: type) {
+
+        viewModel.fetchTrending(type: type) {
             self.movieCollectionView.reloadData()
         }
-        viewModel.loadUpcoming(type: type) {
+
+        viewModel.fetchUpcoming(type: type) {
             self.movieCollectionView.reloadData()
         }
-        viewModel.loadTopRated(type: type) {
+
+        viewModel.fetchTopRated(type: type) {
             self.movieCollectionView.reloadData()
         }
+        
+//        viewModel.loadGenresForMedia(type: type) {
+//            self.movieCollectionView.reloadData()
+//        }
+//
+//        viewModel.loadTrending(type: type) {
+//            self.movieCollectionView.reloadData()
+//        }
+//
+//        viewModel.loadUpcoming(type: type) {
+//            self.movieCollectionView.reloadData()
+//        }
+//        viewModel.loadTopRated(type: type) {
+//            self.movieCollectionView.reloadData()
+//        }
     }
     
     private func setupConstraints() {

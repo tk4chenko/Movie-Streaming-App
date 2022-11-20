@@ -13,17 +13,59 @@ class ViewModelMoviesVC {
     //    var arrayOfMovies = [Title]()
     //    var arrayOfTVShows = [Title]()
     
-    var upcoming = [Media]()
-    var trending = [Media]()
-    var topRated = [Media]()
-    
     var dictOfMovies = [String: [Media]]()
     var dictOfTVShows = [String: [Media]]()
     var arrayOfMovieGenres = [Genre]()
     var arrayOfTVGenres = [Genre]()
     
+    
+    var arrayOfMediaByGenre = [Media]()
+    var upcoming = [Media]()
+    var trending = [Media]()
+    var topRated = [Media]()
     var genres = [Genre]()
     
+    func fetchGenres(type: String, completion: @escaping () -> Void) {
+        NetworkManager.shared.loadGenresForMedia(type: type) { genres in
+            self.genres = genres
+            completion()
+        }
+    }
+    
+    func fetchMedia(type: String, page: Int, genre: Int, completion: @escaping () -> Void) {
+        NetworkManager.shared.loadMediaByGenre(type: type, page: page, genre: genre) { media in
+            self.arrayOfMediaByGenre = media
+            completion()
+        }
+        
+    }
+    
+    func delSession(sessionId: String, completion: @escaping () -> Void) {
+        NetworkManager.shared.deleteSession(sessionId: sessionId)
+        completion()
+    }
+    
+    func fetchTrending(type: String, completion: @escaping () -> Void) {
+        NetworkManager.shared.loadTrending(type: type) { media in
+            self.trending = media
+            completion()
+        }
+    }
+    
+    func fetchUpcoming(type: String, completion: @escaping () -> Void) {
+        NetworkManager.shared.loadUpcoming(type: type) { media in
+            self.upcoming = media
+            completion()
+        }
+        
+    }
+    
+    func fetchTopRated(type: String, completion: @escaping () -> Void) {
+        NetworkManager.shared.loadTopRated(type: type) { media in
+            self.topRated = media
+            completion()
+        }
+    }
     
     func loadGenresForMedia(type: String, completion: @escaping () -> Void) {
         
