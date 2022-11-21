@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CompositionalLayoutControllerViewController: UIViewController {
+class DiscoverViewController: UIViewController {
     
     private let viewModel = ViewModelMoviesVC()
     
@@ -30,12 +30,15 @@ class CompositionalLayoutControllerViewController: UIViewController {
         let control = UISegmentedControl(items: items)
         control.translatesAutoresizingMaskIntoConstraints = false
         control.selectedSegmentIndex = 0
-        control.setupSegment()
         return control
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "Discover"
+        
+        segmentController.setupSegment()
         
         segmentController.addTarget(self, action: #selector(segmentTapped), for: .valueChanged)
         
@@ -59,7 +62,7 @@ class CompositionalLayoutControllerViewController: UIViewController {
         let vc = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: false)
-        viewModel.deleteSession(sessionId: sessionId)
+        viewModel.delSession()
     }
     
     override func viewDidLayoutSubviews() {
@@ -76,35 +79,28 @@ class CompositionalLayoutControllerViewController: UIViewController {
     private func fetchData(type: String) {
         
         viewModel.fetchGenres(type: type) {
-            self.movieCollectionView.reloadData()
+            DispatchQueue.main.async {
+                self.movieCollectionView.reloadData()
+            }
         }
 
         viewModel.fetchTrending(type: type) {
-            self.movieCollectionView.reloadData()
+            DispatchQueue.main.async {
+                self.movieCollectionView.reloadData()
+            }
         }
 
         viewModel.fetchUpcoming(type: type) {
-            self.movieCollectionView.reloadData()
+            DispatchQueue.main.async {
+                self.movieCollectionView.reloadData()
+            }
         }
 
         viewModel.fetchTopRated(type: type) {
-            self.movieCollectionView.reloadData()
+            DispatchQueue.main.async {
+                self.movieCollectionView.reloadData()
+            }
         }
-        
-//        viewModel.loadGenresForMedia(type: type) {
-//            self.movieCollectionView.reloadData()
-//        }
-//
-//        viewModel.loadTrending(type: type) {
-//            self.movieCollectionView.reloadData()
-//        }
-//
-//        viewModel.loadUpcoming(type: type) {
-//            self.movieCollectionView.reloadData()
-//        }
-//        viewModel.loadTopRated(type: type) {
-//            self.movieCollectionView.reloadData()
-//        }
     }
     
     private func setupConstraints() {
@@ -138,11 +134,10 @@ class CompositionalLayoutControllerViewController: UIViewController {
             }
         }
     }
-    
     let categoryHeaderID = "categoryHeaderID"
 }
 
-extension CompositionalLayoutControllerViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension DiscoverViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         

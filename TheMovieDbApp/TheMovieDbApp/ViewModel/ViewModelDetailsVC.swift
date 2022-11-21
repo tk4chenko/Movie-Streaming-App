@@ -29,7 +29,7 @@ class ViewModelDetailsVC {
             }
             
         }
-        
+    
     }
     
     func addToWatchlist(watchlist: Bool, accountID: Int, mediaType: String, mediaId: Int, sessionId: String, completion: @escaping (Welcome, String) -> Void) {

@@ -10,14 +10,11 @@ import UIKit
 class AllMoviesViewController: UIViewController {
     
     static var identifier = "AllMoviesViewController"
-
-    private var currentPage = 1
-    private var totalPages = 3
+    
     private var genreId = Int()
     private var mediaType = String()
-    private var mediaArray = [Media]()
     
-    private let viewModel = ViewModelMoviesVC()
+    private let viewModel = ViewModelAllMoviesVC()
     
     var movieCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -31,8 +28,8 @@ class AllMoviesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        viewModel.loadGenresForMedia(type: mediaType) {
+        
+        viewModel.fetchGenres(type: mediaType) {
             self.movieCollectionView.reloadData()
         }
         
@@ -58,10 +55,11 @@ class AllMoviesViewController: UIViewController {
         mediaType = type
         title = genre.name
         genreId = genre.id
-
-        viewModel.loadMediaByGenre(type: mediaType, page: 1, genre: genreId) { media in
-            self.mediaArray = media
-            self.movieCollectionView.reloadData()
+        
+        viewModel.fetchMedia(type: mediaType, genre: genreId) {
+            DispatchQueue.main.async {
+                self.movieCollectionView.reloadData()
+            }
         }
     }
     
@@ -70,29 +68,31 @@ class AllMoviesViewController: UIViewController {
 extension AllMoviesViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-
-        if currentPage < totalPages && indexPath.row == mediaArray.count - 1 {
-            currentPage += 1
-            viewModel.loadMediaByGenre(type: mediaType, page: currentPage, genre: genreId) { movies in
-                self.mediaArray.append(contentsOf: movies)
-                    collectionView.reloadData()
+        
+        if viewModel.currentPage < viewModel.totalPages && indexPath.row == viewModel.arrayOfMediaByGenre.count - 1 {
+            viewModel.fetchMedia(type: mediaType, genre: genreId) {
+                DispatchQueue.main.async {
+                    self.movieCollectionView.reloadData()
                 }
             }
         }
-
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        mediaArray.count
+        viewModel.arrayOfMediaByGenre.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell else { return UICollectionViewCell() }
-        cell.configure(color: .red, with: mediaArray[indexPath.row])
+        cell.configure(color: .red, with: viewModel.arrayOfMediaByGenre[indexPath.row])
+        
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = DetailsViewController()
-        vc.configure(mediaType: mediaType, media: mediaArray[indexPath.row], genres: viewModel.genres)
+        vc.configure(mediaType: mediaType, media: viewModel.arrayOfMediaByGenre[indexPath.row], genres: viewModel.genres)
         self.navigationController?.pushViewController(vc, animated: true)
     }
-
+    
 }

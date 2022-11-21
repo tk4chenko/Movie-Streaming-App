@@ -12,10 +12,40 @@ let apiKey = "e1988c5fd4dfd50566522f6ff287a95b"
 
 class ViewModelAuthenticationVC {
     
+    func getRequestToken(completion: @escaping (String) -> Void) {
+        NetworkManager.shared.createRequestToken { token in
+            completion(token)
+        }
+    }
+    
+    func createSessionUsingLogin(username: String, password: String, requestToken: String) {
+        NetworkManager.shared.createSessionWithLogin(username: username, password: password, requestToken: requestToken)
+    }
+    
+    func createSess(requestToken: String) {
+        NetworkManager.shared.createSession(requestToken: requestToken) { responce in
+            sessionId = responce.session_id ?? ""
+        }
+    }
+    
+    func getAccId(sessionId: String) {
+        NetworkManager.shared.getAccountId(sessionId: sessionId) { responce in
+            accountId = responce.id ?? 0
+        }
+    }
+    
+    func createGuestSess(completion: @escaping (SessionResponce) -> Void) {
+        NetworkManager.shared.createGuestSession { responce in
+            sessionId = responce.session_id ?? ""
+            completion(responce)
+        }
+    }
+    
+    
     func createRequestToken(completion: @escaping (String) -> Void) {
         
         let genresRequest = AF.request("https://api.themoviedb.org/3/authentication/token/new?api_key=\(apiKey)", method: .get)
-        
+         
         genresRequest.responseDecodable(of: TokenResponce.self) { response in
             do {
                 let data = try response.result.get().request_token

@@ -19,6 +19,7 @@ class WatchlistViewController: UIViewController {
         let control = UISegmentedControl(items: items)
         control.translatesAutoresizingMaskIntoConstraints = false
         control.selectedSegmentIndex = 0
+        
         return control
     }()
     
@@ -33,6 +34,8 @@ class WatchlistViewController: UIViewController {
         super.viewDidLoad()
         
         title = "Watchlist"
+        
+        segmentController.setupSegment()
         
         segmentController.addTarget(self, action: #selector(segmentTapped), for: .valueChanged)
         
@@ -65,6 +68,7 @@ class WatchlistViewController: UIViewController {
     }
     
     @objc func segmentTapped() {
+        segmentController.setupSegment()
         self.tableView.reloadData()
         //        print("RELOAD!!!")
     }

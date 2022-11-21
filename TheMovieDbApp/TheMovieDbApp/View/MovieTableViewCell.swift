@@ -42,7 +42,7 @@ class MovieTableViewCell: UITableViewCell {
     private let overviewLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 5
+        label.numberOfLines = 4
         label.textAlignment = .left
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
@@ -85,6 +85,7 @@ class MovieTableViewCell: UITableViewCell {
             overviewLabel.leftAnchor.constraint(equalTo: posterView.rightAnchor, constant: 8),
             overviewLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8),
             overviewLabel.topAnchor.constraint(equalTo: releaseDateLabel.bottomAnchor, constant: 8)
+            
         ])
     }
 

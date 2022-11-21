@@ -7,9 +7,6 @@
 
 import UIKit
 
-var sessionId = String()
-var accountId = Int()
-
 class AuthenticationViewController: UIViewController {
     
     private let viewModel = ViewModelAuthenticationVC()
@@ -34,6 +31,7 @@ class AuthenticationViewController: UIViewController {
     }
     
     @IBAction func guestSessionPressed(_ sender: Any) {
+        
         viewModel.createGuestSession { session in
             sessionId = session.guestSessionID ?? ""
             
@@ -45,6 +43,7 @@ class AuthenticationViewController: UIViewController {
             }
         }
     }
+    
     @IBAction func loginPressed(_ sender: Any) {
         viewModel.createRequestToken { token in
             self.viewModel.createSessionWithLogin(username: self.username, password: self.password, requestToken: token) {
