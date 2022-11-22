@@ -31,10 +31,9 @@ class AuthenticationViewController: UIViewController {
     }
     
     @IBAction func guestSessionPressed(_ sender: Any) {
-        
         viewModel.createGuestSession { session in
-            sessionId = session.guestSessionID ?? ""
-            
+            sessionId = session.guest_session_id ?? ""
+            print(sessionId)
             if session.success == true {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "UITabBarController")
@@ -45,30 +44,17 @@ class AuthenticationViewController: UIViewController {
     }
     
     @IBAction func loginPressed(_ sender: Any) {
-        viewModel.createRequestToken { token in
-            self.viewModel.createSessionWithLogin(username: self.username, password: self.password, requestToken: token) {
-                self.viewModel.createSession(requestToken: token) { session in
-                    self.viewModel.getAccountId(sessionId: session.session_id ?? "") { accountID in
-                        accountId = accountID.id ?? 0
-                        print(accountID.id ?? 0)
-                    }
-                    print(session.session_id ?? "")
-                    
-                    sessionId = session.session_id ?? ""
-                    
-                    if session.success == true {
-                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                        let vc = storyboard.instantiateViewController(withIdentifier: "UITabBarController")
-                        vc.modalPresentationStyle = .fullScreen
-//                        self.dismiss(animated: true)
-                        self.present(vc, animated: false)
-                    } else {
-                        self.wrongLabel.text = "Wrong password or username"
-                    }
-                }
+        viewModel.createSession(username: self.username, password: self.password) { success in
+            if success == true {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "UITabBarController")
+                vc.modalPresentationStyle = .fullScreen
+                self.dismiss(animated: true)
+                self.present(vc, animated: false)
+            } else {
+                self.wrongLabel.text = "Wrong password or username"
             }
         }
-        
     }
-    
+
 }

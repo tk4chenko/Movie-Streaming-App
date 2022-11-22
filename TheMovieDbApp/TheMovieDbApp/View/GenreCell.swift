@@ -33,6 +33,7 @@ class GenreCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         setupConstraints()
+        
     }
     
     private func setupConstraints() {

@@ -134,7 +134,7 @@ class DiscoverViewController: UIViewController {
             }
         }
     }
-    let categoryHeaderID = "categoryHeaderID"
+    private let categoryHeaderID = "categoryHeaderID"
 }
 
 extension DiscoverViewController: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -235,3 +235,11 @@ extension DiscoverViewController: UICollectionViewDataSource, UICollectionViewDe
     }
     
 }
+//
+//extension DiscoverViewController: UpdateView {
+//    func reloadData() {
+//        DispatchQueue.main.async {
+//            self.movieCollectionView.reloadData()
+//        }
+//    }
+//}

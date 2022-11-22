@@ -58,6 +58,7 @@ class MovieTableViewCell: UITableViewCell {
         let date = media.release_date ?? "" + (media.first_air_date ?? "")
         releaseDateLabel.text = String(date.dropLast(6))
         guard let url = URL(string: "https://image.tmdb.org/t/p/w500" + (media.poster_path ?? "")) else { return }
+        posterView.sd_imageIndicator = SDWebImageActivityIndicator.gray
         posterView.sd_setImage(with: url, completed: nil)
         overviewLabel.text = media.overview
     }

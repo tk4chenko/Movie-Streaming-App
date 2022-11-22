@@ -161,3 +161,11 @@ extension UIImage{
     return rectangleImage!
   }
 }
+
+protocol UpdateView: AnyObject {
+    func reloadData()
+}
+
+extension UpdateView {
+    func reloadData() { }
+}

@@ -26,7 +26,7 @@ class NetworkManager {
         }
     }
     
-    func createSessionWithLogin(username: String, password: String, requestToken: String) {
+    func createSessionWithLogin(username: String, password: String, requestToken: String, completion: @escaping () -> Void){
         let parameters: [String: Any] = [
               "username": username,
               "password": password,
@@ -35,8 +35,8 @@ class NetworkManager {
         let genresRequest = AF.request("https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=\(apiKey)", method: .post, parameters: parameters, encoding: JSONEncoding.default)
         genresRequest.responseDecodable(of: SessionResponce.self) { response in
             do {
-                _ = try response.result.get().success
-//                completion()
+                _ = try response.result.get()
+                completion()
             }
             catch {
                 print("error: \(error)")

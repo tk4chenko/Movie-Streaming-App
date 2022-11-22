@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class TrendingCell: UICollectionViewCell {
     
@@ -60,6 +61,7 @@ class TrendingCell: UICollectionViewCell {
         scoreLabel.text = String(Int(title.vote_average * 10)) + "%"
         titleLabel.text = String(title.title ?? "" + (title.name ?? ""))
         guard let url = URL(string: "https://image.tmdb.org/t/p/original" + (title.backdrop_path ?? "")) else { return }
+        posterView.sd_imageIndicator = SDWebImageActivityIndicator.gray
         posterView.sd_setImage(with: url, completed: nil)
     }
     

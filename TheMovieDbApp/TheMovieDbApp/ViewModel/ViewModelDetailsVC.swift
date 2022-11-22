@@ -8,6 +8,8 @@
 import Foundation
 import Alamofire
 
+let apiKey = "e1988c5fd4dfd50566522f6ff287a95b"
+
 class ViewModelDetailsVC {
     
     var arrayOfViedos = [Video]()

@@ -73,7 +73,8 @@ class MovieCollectionViewCell: UICollectionViewCell {
         scoreView.backgroundColor = color
         scoreLabel.text = String(Int(title.vote_average * 10)) + "%"
         titleLabel.text = String(title.title ?? "" + (title.name ?? ""))
-        guard let url = URL(string: "https://image.tmdb.org/t/p/original" + (title.poster_path ?? "")) else { return }
+        guard let url = URL(string: "https://image.tmdb.org/t/p/w500" + (title.poster_path ?? "")) else { return }
+        posterView.sd_imageIndicator = SDWebImageActivityIndicator.gray
         posterView.sd_setImage(with: url, completed: nil)
     }
     
