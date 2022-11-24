@@ -46,10 +46,10 @@ class GenreCell: UICollectionViewCell {
             container.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
             container.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
 
-            titleLabel.leftAnchor.constraint(equalTo: container.leftAnchor, constant: 0),
-            titleLabel.rightAnchor.constraint(equalTo: container.rightAnchor, constant: 0),
-            titleLabel.topAnchor.constraint(equalTo: container.topAnchor, constant: 0),
-            titleLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: 0)
+            titleLabel.leftAnchor.constraint(equalTo: container.leftAnchor, constant: 20),
+            titleLabel.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -30),
+            titleLabel.topAnchor.constraint(equalTo: container.topAnchor, constant: 8),
+            titleLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -8)
         
         ])
         

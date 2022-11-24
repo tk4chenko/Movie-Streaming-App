@@ -25,12 +25,13 @@ extension UICollectionView {
     }
     
     func genres(headerID: String)  -> NSCollectionLayoutSection? {
-        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .absolute(150), heightDimension: .absolute(40)))
+        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .estimated(150), heightDimension: .absolute(40)))
 //        item.contentInsets.trailing = 8
 //        item.contentInsets.bottom = 16
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(150), heightDimension: .absolute(40))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(150), heightDimension: .absolute(40))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        group.interItemSpacing = .fixed(8)
         
         let section = NSCollectionLayoutSection(group: group)
         //        section.contentInsets.leading = 16
