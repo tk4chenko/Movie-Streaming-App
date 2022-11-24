@@ -7,9 +7,6 @@
 
 import Foundation
 
-var sessionId = String()
-var accountId = Int()
-
 class ViewModelMoviesVC {
     weak var delegate: UpdateView?
     public var arrayOfMediaByGenre = [Media]()

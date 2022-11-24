@@ -55,22 +55,19 @@ class WatchlistViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.getMovieWatchlist(accountId: accountId, sessionId: sessionId) { movies in
-            self.watchlistOfMovies = movies.reversed()
+        
+        viewModel.fetchMovieWatchlist {
             self.tableView.reloadData()
         }
         
-        viewModel.getTVShowsWatchlist(accountId: accountId, sessionId: sessionId) { tvShows in
-            self.watchlistOfTVShows = tvShows.reversed()
+        viewModel.fetchTVShowsWatchlist {
             self.tableView.reloadData()
         }
-        
     }
     
     @objc func segmentTapped() {
         segmentController.setupSegment()
         self.tableView.reloadData()
-        //        print("RELOAD!!!")
     }
     
     private func setupConstraints() {
@@ -95,8 +92,8 @@ extension WatchlistViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch segmentController.selectedSegmentIndex {
-        case 0: return watchlistOfMovies.count
-        case 1: return watchlistOfTVShows.count
+        case 0: return viewModel.arrayOfMoviesWatchlist.count
+        case 1: return viewModel.arrayOfTVShowsWatchlist.count
         default:
             return 0
         }
@@ -106,8 +103,8 @@ extension WatchlistViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier) as? MovieTableViewCell else { return UITableViewCell() }
         switch segmentController.selectedSegmentIndex {
-        case 0: cell.configure(media: self.watchlistOfMovies[indexPath.row])
-        case 1: cell.configure(media: self.watchlistOfTVShows[indexPath.row])
+        case 0: cell.configure(media: self.viewModel.arrayOfMoviesWatchlist[indexPath.row])
+        case 1: cell.configure(media: self.viewModel.arrayOfTVShowsWatchlist[indexPath.row])
         default:
             return UITableViewCell()
         }
@@ -121,26 +118,20 @@ extension WatchlistViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let removeAction = UIContextualAction(style: .normal, title: "Remove") { [weak self]_, _, completion in
-            
             switch self?.segmentController.selectedSegmentIndex {
             case 0:
-                self?.viewModel.removeFromWatchlist(accountID: accountId, mediaType: "movie", mediaId: self?.watchlistOfMovies[indexPath.row].id ?? 0, sessionId: sessionId) { result , mediatId in
-                    self?.watchlistOfMovies.remove(at: indexPath.row)
+                self?.viewModel.remove(mediaType: "movie", mediaId: self?.viewModel.arrayOfMoviesWatchlist[indexPath.row].id ?? 0) {
+                    self?.viewModel.arrayOfMoviesWatchlist.remove(at: indexPath.row)
                     tableView.reloadData()
-                    print(result)
-                    print(mediatId)
                 }
             case 1:
-                self?.viewModel.removeFromWatchlist(accountID: accountId, mediaType: "tv", mediaId: self?.watchlistOfTVShows[indexPath.row].id ?? 0, sessionId: sessionId) { result, mediaId in
-                    self?.watchlistOfTVShows.remove(at: indexPath.row)
+                self?.viewModel.remove(mediaType: "tv", mediaId: self?.viewModel.arrayOfTVShowsWatchlist[indexPath.row].id ?? 0) {
+                    self?.viewModel.arrayOfTVShowsWatchlist.remove(at: indexPath.row)
                     tableView.reloadData()
-                    print(result)
-                    print(mediaId)
                 }
             default:
                 return
             }
-            
         }
         removeAction.backgroundColor = .red
         return UISwipeActionsConfiguration(actions: [removeAction])

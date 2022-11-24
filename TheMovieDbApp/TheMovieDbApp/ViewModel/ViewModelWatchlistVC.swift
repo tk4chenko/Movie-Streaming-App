@@ -6,69 +6,31 @@
 //
 
 import Foundation
-import Alamofire
 
 class ViewModelWatchlistVC {
     
-    var arrayOfMoviesWatchlist = [Media]()
-    var arrayOfTVShowsWatchlist = [Media]()
+    public var arrayOfMoviesWatchlist = [Media]()
+    public var arrayOfTVShowsWatchlist = [Media]()
     
-    func getMovieWatchlist(accountId: Int, sessionId: String, completion: @escaping([Media]) -> ()) {
-        
-        let genresRequest = AF.request("https://api.themoviedb.org/3/account/\(accountId)/watchlist/movies?language=en-US&sort_by=created_at.asc&page=1&api_key=e1988c5fd4dfd50566522f6ff287a95b&session_id=\(sessionId)", method: .get)
-        
-        genresRequest.responseDecodable(of: MediaResponce.self) { response in
-            do {
-                //                self.arrayOfMoviesWatchlist = try response.result.get().results
-                let data = try response.result.get().results
-//                self.arrayOfMoviesWatchlist = data.reversed()
-                completion(data)
-            }
-            catch {
-                print("error: \(error)")
-            }
-            
+    public func fetchMovieWatchlist(completion: @escaping() -> Void) {
+        NetworkManager.shared.getMovieWatchlist(accountId: accountId, sessionId: sessionId) { media in
+            self.arrayOfMoviesWatchlist = media.reversed()
+            completion()
         }
     }
-        
-        func getTVShowsWatchlist(accountId: Int, sessionId: String, completion: @escaping(([Media])->())) {
-            
-            let genresRequest = AF.request("https://api.themoviedb.org/3/account/\(accountId)/watchlist/tv?language=en-US&sort_by=created_at.asc&page=1&api_key=e1988c5fd4dfd50566522f6ff287a95b&session_id=\(sessionId)", method: .get)
-            
-            genresRequest.responseDecodable(of: MediaResponce.self) { response in
-                do {
-                    //                self.arrayOfMoviesWatchlist = try response.result.get().results
-                    let data = try response.result.get().results
-                    self.arrayOfTVShowsWatchlist = data.reversed()
-                    completion(data)
-                }
-                catch {
-                    print("error: \(error)")
-                }
-                
-            }
-        }
     
-    func removeFromWatchlist(accountID: Int, mediaType: String, mediaId: Int, sessionId: String, completion: @escaping (SessionResponce, Int) -> Void) {
-        
-        let parameters: [String: Any] = [
-            "media_type": mediaType,
-            "media_id": mediaId,
-            "watchlist": false
-        ]
-        
-        let genresRequest = AF.request("https://api.themoviedb.org/3/account/\(accountID)/watchlist?api_key=\(apiKey)&session_id=\(sessionId)", method: .post, parameters: parameters, encoding: JSONEncoding.default)
-        
-        genresRequest.responseDecodable(of: SessionResponce.self) { response in
-            do {
-                let data = try response.result.get()
-                completion(data, mediaId)
-            }
-            catch {
-                print("error: \(error)")
-            }
-            
+    public func fetchTVShowsWatchlist(completion: @escaping() -> Void) {
+        NetworkManager.shared.getTVShowsWatchlist(accountId: accountId, sessionId: sessionId) { media in
+            self.arrayOfTVShowsWatchlist = media.reversed()
+            completion()
         }
     }
-        
+    
+    public func remove(mediaType: String, mediaId: Int, completion: @escaping() -> Void) {
+        NetworkManager.shared.removeFromWatchlist(accountID: accountId, mediaType: mediaType, mediaId: mediaId, sessionId: sessionId) { session, mediaId in
+            print(session, mediaId)
+            completion()
+        }
+    }
+    
 }

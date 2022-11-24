@@ -19,8 +19,6 @@ class DetailsViewController: UIViewController {
     private var mediaType = String()
     private var watchlistType = String()
     
-    var arrayOfVideos = [Video]()
-    
     private lazy var pageControl: UIPageControl = {
         let control = UIPageControl()
         control.translatesAutoresizingMaskIntoConstraints = false
@@ -103,11 +101,11 @@ class DetailsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.getWatchlist(type: watchlistType, accountId: accountId, sessionId: sessionId) { movies in
-            
+        
+        viewModel.getWatchlist(type: watchlistType) {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(self.addTapped))
             
-            for movie in movies {
+            for movie in self.viewModel.watchlist {
                 if movie.id == self.mediaId {
                     self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star.fill"), style: .plain, target: self, action: #selector(self.removeTapped))
                     return
@@ -140,17 +138,13 @@ class DetailsViewController: UIViewController {
     }
     
     @objc func addTapped() {
-        viewModel.addToWatchlist(watchlist: true, accountID: accountId, mediaType: mediaType, mediaId: mediaId, sessionId: sessionId) { result, mediaType in
-            print(mediaType)
-            print(result)
+        viewModel.addToWatchlist(watchlist: true, mediaType: mediaType, mediaId: mediaId) {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star.fill"))
         }
     }
     
     @objc func removeTapped() {
-        viewModel.addToWatchlist(watchlist: false, accountID: accountId, mediaType: mediaType, mediaId: mediaId, sessionId: sessionId) { result, mediaType in
-            print(mediaType)
-            print(result)
+        viewModel.addToWatchlist(watchlist: false, mediaType: mediaType, mediaId: mediaId) {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"))
         }
     }
@@ -187,11 +181,8 @@ class DetailsViewController: UIViewController {
             }
         }
         genreLabel.text = g
-        viewModel.loadTrailer(mediaType: mediaType, movieId: media.id) { videos in
-            DispatchQueue.main.async {
-                self.arrayOfVideos = videos
-                self.videoCollectionView.reloadData()
-            }
+        viewModel.loadTrailers(mediaType: mediaType, movieId: media.id) {
+            self.videoCollectionView.reloadData()
         }
     }
     
@@ -241,7 +232,7 @@ class DetailsViewController: UIViewController {
 
 extension DetailsViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let count =  arrayOfVideos.count
+        let count = self.viewModel.arrayOfViedos.count
         if count == 1 {
             pageControl.numberOfPages = 0
         } else {
@@ -252,7 +243,7 @@ extension DetailsViewController: UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VideoCollectionViewCell.identifier, for: indexPath) as? VideoCollectionViewCell else { return UICollectionViewCell() }
-        cell.playerView.load(withVideoId: arrayOfVideos[indexPath.row].key)
+        cell.playerView.load(withVideoId: self.viewModel.arrayOfViedos[indexPath.row].key)
         return cell
         
     }
@@ -264,7 +255,6 @@ extension DetailsViewController: UICollectionViewDataSource, UICollectionViewDel
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         pageControl.currentPage = indexPath.row
     }
-    
     
 }
 

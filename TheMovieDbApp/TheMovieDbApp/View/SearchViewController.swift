@@ -36,9 +36,8 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel.loadGenresforMovies { genre in
-            self.genres = genre
-        }
+        viewModel.loadGenres()
+        
 //        searchBar.searchBar.delegate = self
         navigationItem.title  = "Search"
         view.backgroundColor = .systemBackground
@@ -66,8 +65,7 @@ extension SearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let query = searchController.searchBar.text else { return }
         viewModel.currentPage = 1
-        viewModel.search(page: viewModel.currentPage, query: query.trimmingCharacters(in: .whitespaces)) { titles in
-            self.movies = titles
+        viewModel.searchMovie(query: query) {
             DispatchQueue.main.async {
                 self.movieCollectionView.reloadData()
             }
@@ -80,11 +78,9 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let query = searchBar.searchBar.text else { return }
         if viewModel.currentPage < viewModel.totalPages && indexPath.row == movies.count - 1 {
-            viewModel.currentPage += 1
-            viewModel.search(page: viewModel.currentPage, query: query.trimmingCharacters(in: .whitespaces)) { new in
-                self.movies.append(contentsOf: new)
+            viewModel.searchMovie(query: query.trimmingCharacters(in: .whitespaces)) {
                 DispatchQueue.main.async {
-                    collectionView.reloadData()
+                    self.movieCollectionView.reloadData()
                 }
             }
         }
@@ -92,12 +88,12 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        movies.count
+        viewModel.searched.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell {
-            cell.configure(color: .systemBlue, with: movies[indexPath.row])
+            cell.configure(color: .systemBlue, with: viewModel.searched[indexPath.row])
             return cell
         }
         return UICollectionViewCell()
@@ -106,15 +102,14 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let vc = storyboard.instantiateViewController(withIdentifier: "DetailsViewController") as? DetailsViewController else { return }
-        vc.configure(mediaType: "movie", media: movies[indexPath.row], genres: genres)
-        
+        vc.configure(mediaType: "movie", media: viewModel.searched[indexPath.row], genres: viewModel.genres)
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 // doesn't work
 extension SearchViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        movies.removeAll()
+        viewModel.searched.removeAll()
         searchBar.text = ""
         movieCollectionView.reloadData()
     }
