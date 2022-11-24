@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Locksmith
 
 class DiscoverViewController: UIViewController {
     
@@ -55,6 +56,7 @@ class DiscoverViewController: UIViewController {
         
         movieCollectionView.register(Header.self, forSupplementaryViewOfKind: categoryHeaderID, withReuseIdentifier: Header.headerID)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sign out", style: .plain, target: self, action: #selector(signOut))
+        navigationItem.backButtonTitle = ""
     }
     
     @objc func signOut() {
@@ -156,12 +158,12 @@ extension DiscoverViewController: UICollectionViewDataSource, UICollectionViewDe
             header.label.textColor = .red
         } else if indexPath.section == 1 {
             header.label.text = "Trending \(mediaType)"
-            header.label.textColor = .systemPink
+            header.label.textColor = .systemBlue
             
             
         } else if indexPath.section ==  2{
             header.label.text = "Popular \(mediaType)"
-            header.label.textColor = .systemBlue
+            header.label.textColor = .systemPink
             
         } else {
             header.label.text = "Top Rated \(mediaType)"
@@ -202,7 +204,7 @@ extension DiscoverViewController: UICollectionViewDataSource, UICollectionViewDe
             return cell
         } else if indexPath.section == 2 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as! MovieCollectionViewCell
-            cell.configure(color: .systemBlue, with: viewModel.upcoming[indexPath.row])
+            cell.configure(color: .systemPink, with: viewModel.upcoming[indexPath.row])
             return cell
         } else if indexPath.section == 3 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as! MovieCollectionViewCell

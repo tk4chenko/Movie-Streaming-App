@@ -41,14 +41,15 @@ class GenreCell: UICollectionViewCell {
         container.addSubview(titleLabel)
         
         NSLayoutConstraint.activate([
-            container.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 0),
+            container.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 8),
             container.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 0),
             container.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
             container.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
 
-            titleLabel.leftAnchor.constraint(equalTo: container.leftAnchor, constant: 8),
-            titleLabel.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -8),
-            titleLabel.topAnchor.constraint(equalTo: container.topAnchor, constant: 10)
+            titleLabel.leftAnchor.constraint(equalTo: container.leftAnchor, constant: 0),
+            titleLabel.rightAnchor.constraint(equalTo: container.rightAnchor, constant: 0),
+            titleLabel.topAnchor.constraint(equalTo: container.topAnchor, constant: 0),
+            titleLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: 0)
         
         ])
         

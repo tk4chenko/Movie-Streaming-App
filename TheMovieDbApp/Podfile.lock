@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.6.2)
+  - Locksmith (4.0.0)
   - SDWebImage (5.13.2):
     - SDWebImage/Core (= 5.13.2)
   - SDWebImage/Core (5.13.2)
@@ -7,20 +8,23 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - Locksmith
   - SDWebImage
   - youtube-ios-player-helper
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - Locksmith
     - SDWebImage
     - youtube-ios-player-helper
 
 SPEC CHECKSUMS:
   Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
+  Locksmith: e9bebbaaa4cee3c511bc358a44f843c3fe00e21f
   SDWebImage: 72f86271a6f3139cc7e4a89220946489d4b9a866
   youtube-ios-player-helper: e9b97535e816db3152179d84d999bc1807ecd689
 
-PODFILE CHECKSUM: 6b489a78a8322f9ee112185bb46473effec2cfdb
+PODFILE CHECKSUM: aef0e317209ff888b8c0484dc2fd0ebc9d93ffbe
 
 COCOAPODS: 1.11.3

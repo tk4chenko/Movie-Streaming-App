@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Locksmith
 
 class AuthenticationViewController: UIViewController {
     
@@ -17,23 +18,12 @@ class AuthenticationViewController: UIViewController {
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     
-    private var username: String! {
-        return usernameField.text
-    }
-    
-    private var password: String! {
-        return passwordField.text
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     @IBAction func guestSessionPressed(_ sender: Any) {
         viewModel.createGuestSession { session in
-            sessionId = session.guest_session_id ?? ""
-            print(sessionId)
             if session.success == true {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "UITabBarController")
@@ -44,12 +34,14 @@ class AuthenticationViewController: UIViewController {
     }
     
     @IBAction func loginPressed(_ sender: Any) {
-        viewModel.createSession(username: self.username, password: self.password) { success in
+        guard let username = usernameField.text, let password = passwordField.text else { return }
+    
+        viewModel.createSession(username: username, password: password) { success in
             if success == true {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "UITabBarController")
                 vc.modalPresentationStyle = .fullScreen
-                self.dismiss(animated: true)
+                self.dismiss(animated: false)
                 self.present(vc, animated: false)
             } else {
                 self.wrongLabel.text = "Wrong password or username"

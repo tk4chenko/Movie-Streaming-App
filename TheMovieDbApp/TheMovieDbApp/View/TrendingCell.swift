@@ -57,7 +57,7 @@ class TrendingCell: UICollectionViewCell {
     }
     
     public func configure(with title: Media) {
-        scoreView.backgroundColor = .systemPink
+        scoreView.backgroundColor = .systemBlue
         scoreLabel.text = String(Int(title.vote_average * 10)) + "%"
         titleLabel.text = String(title.title ?? "" + (title.name ?? ""))
         guard let url = URL(string: "https://image.tmdb.org/t/p/original" + (title.backdrop_path ?? "")) else { return }

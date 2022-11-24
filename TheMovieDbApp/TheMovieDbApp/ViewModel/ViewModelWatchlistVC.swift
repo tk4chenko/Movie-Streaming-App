@@ -6,28 +6,31 @@
 //
 
 import Foundation
+import Locksmith
 
 class ViewModelWatchlistVC {
-    
     public var arrayOfMoviesWatchlist = [Media]()
     public var arrayOfTVShowsWatchlist = [Media]()
     
     public func fetchMovieWatchlist(completion: @escaping() -> Void) {
-        NetworkManager.shared.getMovieWatchlist(accountId: accountId, sessionId: sessionId) { media in
+        guard let dictionary = Locksmith.loadDataForUserAccount(userAccount: "Session") else { return }
+        NetworkManager.shared.getMovieWatchlist(accountId: dictionary["account"] as! Int, sessionId: dictionary["session"] as! String) { media in
             self.arrayOfMoviesWatchlist = media.reversed()
             completion()
         }
     }
     
     public func fetchTVShowsWatchlist(completion: @escaping() -> Void) {
-        NetworkManager.shared.getTVShowsWatchlist(accountId: accountId, sessionId: sessionId) { media in
+        guard let dictionary = Locksmith.loadDataForUserAccount(userAccount: "Session") else { return }
+        NetworkManager.shared.getTVShowsWatchlist(accountId: dictionary["account"] as! Int, sessionId: dictionary["session"] as! String) { media in
             self.arrayOfTVShowsWatchlist = media.reversed()
             completion()
         }
     }
     
     public func remove(mediaType: String, mediaId: Int, completion: @escaping() -> Void) {
-        NetworkManager.shared.removeFromWatchlist(accountID: accountId, mediaType: mediaType, mediaId: mediaId, sessionId: sessionId) { session, mediaId in
+        guard let dictionary = Locksmith.loadDataForUserAccount(userAccount: "Session") else { return }
+        NetworkManager.shared.removeFromWatchlist(accountID: dictionary["account"] as! Int, mediaType: mediaType, mediaId: mediaId, sessionId: dictionary["session"] as! String) { session, mediaId in
             print(session, mediaId)
             completion()
         }

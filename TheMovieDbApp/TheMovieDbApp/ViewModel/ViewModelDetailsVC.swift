@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Locksmith
 
 class ViewModelDetailsVC {
     public var arrayOfViedos = [Video]()
@@ -19,14 +20,16 @@ class ViewModelDetailsVC {
     }
     
     public func addToWatchlist(watchlist: Bool, mediaType: String, mediaId: Int, completion: @escaping () -> Void) {
-        NetworkManager.shared.addToWatchlist(watchlist: watchlist, accountID: accountId, mediaType: mediaType, mediaId: mediaId, sessionId: sessionId) { data, mediaType in
+        guard let dictionary = Locksmith.loadDataForUserAccount(userAccount: "Session") else { return }
+        NetworkManager.shared.addToWatchlist(watchlist: watchlist, accountID: dictionary["account"] as! Int, mediaType: mediaType, mediaId: mediaId, sessionId: dictionary["session"] as! String) { data, mediaType in
             print(data, mediaType)
             completion()
         }
     }
     
     public func getWatchlist(type: String, completion: @escaping () -> Void) {
-        NetworkManager.shared.getWatchlist(type: type, accountId: accountId, sessionId: sessionId) { media in
+        guard let dictionary = Locksmith.loadDataForUserAccount(userAccount: "Session") else { return }
+        NetworkManager.shared.getWatchlist(type: type, accountId: dictionary["account"] as! Int, sessionId: dictionary["session"] as! String) { media in
             self.watchlist = media
             completion()
         }
