@@ -64,11 +64,9 @@ extension SearchViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let query = searchController.searchBar.text else { return }
-        viewModel.currentPage = 1
+        self.viewModel.currentPage = 0
         viewModel.searchMovie(query: query) {
-            DispatchQueue.main.async {
                 self.movieCollectionView.reloadData()
-            }
         }
     }
 }
@@ -77,7 +75,7 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let query = searchBar.searchBar.text else { return }
-        if viewModel.currentPage < viewModel.totalPages && indexPath.row == movies.count - 1 {
+        if viewModel.currentPage < viewModel.totalPages && indexPath.row == viewModel.searched.count - 1 {
             viewModel.searchMovie(query: query.trimmingCharacters(in: .whitespaces)) {
                 DispatchQueue.main.async {
                     self.movieCollectionView.reloadData()
@@ -93,7 +91,7 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell {
-            cell.configure(color: .systemBlue, with: viewModel.searched[indexPath.row])
+            cell.configure(color: .red, with: viewModel.searched[indexPath.row])
             return cell
         }
         return UICollectionViewCell()

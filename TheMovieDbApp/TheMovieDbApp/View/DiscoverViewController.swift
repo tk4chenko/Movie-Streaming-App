@@ -126,7 +126,7 @@ class DiscoverViewController: UIViewController {
         return UICollectionViewCompositionalLayout { (sectionNumber, enviroment) -> NSCollectionLayoutSection? in
             
             if sectionNumber ==  0 {
-                return self.movieCollectionView.genres(headerID: self.categoryHeaderID)
+                return self.movieCollectionView.genres()
             } else if sectionNumber == 1 {
                 return self.movieCollectionView.trendingMovies(headerID: self.categoryHeaderID)
             } else if sectionNumber == 2 {
@@ -154,8 +154,8 @@ extension DiscoverViewController: UICollectionViewDataSource, UICollectionViewDe
         }()
         
         if indexPath.section == 0 {
-            header.label.text = "Genres"
-            header.label.textColor = .red
+//            header.label.text = "Genres"
+//            header.label.textColor = .red
         } else if indexPath.section == 1 {
             header.label.text = "Trending \(mediaType)"
             header.label.textColor = .systemBlue

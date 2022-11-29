@@ -30,6 +30,12 @@ class TrendingCell: UICollectionViewCell {
         return view
     }()
     
+    private let container: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
     private let scoreLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -51,9 +57,16 @@ class TrendingCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-//        contentView.addSubview(posterView)
-//        posterView.frame = contentView.bounds
+        configureShadow()
         setupConstraint()
+    }
+    
+    private func configureShadow() {
+        container.layer.shadowRadius = 5
+        container.layer.shadowOffset = CGSize(width: 2, height: 2)
+        container.layer.shadowOpacity = 0.5
+        container.layer.shadowColor = UIColor.black.cgColor
+        container.layer.cornerRadius = 6
     }
     
     public func configure(with title: Media) {
@@ -66,16 +79,23 @@ class TrendingCell: UICollectionViewCell {
     }
     
     private func setupConstraint() {
-        contentView.addSubview(posterView)
+        contentView.addSubview(container)
+        container.addSubview(posterView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(scoreView)
         scoreView.addSubview(scoreLabel)
         
         NSLayoutConstraint.activate([
+            
+            container.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 0),
+            container.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 0),
+            container.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
+            container.heightAnchor.constraint(equalTo: container.widthAnchor, multiplier: 1.5),
 
-            posterView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 0),
-            posterView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 0),
-            posterView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
+
+            posterView.leftAnchor.constraint(equalTo: container.leftAnchor, constant: 0),
+            posterView.rightAnchor.constraint(equalTo: container.rightAnchor, constant: 0),
+            posterView.topAnchor.constraint(equalTo: container.topAnchor, constant: 0),
             posterView.heightAnchor.constraint(equalTo: posterView.widthAnchor, multiplier: 0.56),
 
             titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 0),

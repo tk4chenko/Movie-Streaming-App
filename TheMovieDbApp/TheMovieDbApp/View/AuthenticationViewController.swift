@@ -20,6 +20,21 @@ class AuthenticationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loginButton.setTitle("Log in", for: .normal)
+        loginButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+        loginButton.tintColor = .white
+        loginButton.backgroundColor = .red
+        loginButton.layer.cornerRadius = 25
+        configureShadow()
+        
+    }
+    
+    private func configureShadow() {
+        loginButton.layer.shadowRadius = 5
+        loginButton.layer.shadowOffset = CGSize(width: 2, height: 2)
+        loginButton.layer.shadowOpacity = 0.5
+        loginButton.layer.shadowColor = UIColor.red.cgColor
+//        titleLabel.layer.cornerRadius = 6
     }
     
     @IBAction func guestSessionPressed(_ sender: Any) {

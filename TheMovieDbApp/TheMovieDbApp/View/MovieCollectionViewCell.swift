@@ -57,7 +57,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-//        configureShadow()
+        configureShadow()
         setupConstraint()
     }
     

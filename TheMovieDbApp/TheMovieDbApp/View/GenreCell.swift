@@ -33,7 +33,15 @@ class GenreCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         setupConstraints()
-        
+        configureShadow()
+    }
+    
+    private func configureShadow() {
+        container.layer.shadowRadius = 5
+        container.layer.shadowOffset = CGSize(width: 2, height: 2)
+        container.layer.shadowOpacity = 0.5
+        container.layer.shadowColor = UIColor.red.cgColor
+//        titleLabel.layer.cornerRadius = 6
     }
     
     private func setupConstraints() {
@@ -46,7 +54,7 @@ class GenreCell: UICollectionViewCell {
             container.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
             container.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
 
-            titleLabel.leftAnchor.constraint(equalTo: container.leftAnchor, constant: 20),
+            titleLabel.leftAnchor.constraint(equalTo: container.leftAnchor, constant: 30),
             titleLabel.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -30),
             titleLabel.topAnchor.constraint(equalTo: container.topAnchor, constant: 8),
             titleLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -8)

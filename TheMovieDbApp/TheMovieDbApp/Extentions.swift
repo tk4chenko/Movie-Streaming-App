@@ -24,21 +24,20 @@ extension UICollectionView {
         
     }
     
-    func genres(headerID: String)  -> NSCollectionLayoutSection? {
+    func genres()  -> NSCollectionLayoutSection? {
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .estimated(150), heightDimension: .absolute(40)))
-//        item.contentInsets.trailing = 8
+        
 //        item.contentInsets.bottom = 16
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(150), heightDimension: .absolute(40))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(150), heightDimension: .absolute(48))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        group.interItemSpacing = .fixed(8)
-        
+        group.contentInsets.top = 8
         let section = NSCollectionLayoutSection(group: group)
         //        section.contentInsets.leading = 16
         section.orthogonalScrollingBehavior = .continuous
         
-        section.boundarySupplementaryItems = [
-            .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40)), elementKind: headerID, alignment: .topLeading)]
+//        section.boundarySupplementaryItems = [
+//            .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40)), elementKind: headerID, alignment: .topLeading)]
         
         return section
     }

@@ -16,7 +16,11 @@ class ViewModelSeacrVC {
     public func searchMovie(query: String, completion: @escaping()->Void) {
         currentPage += 1
         NetworkManager.shared.search(page: currentPage, query: query) { media in
-            self.searched += media
+            if self.currentPage == 1 {
+                self.searched = media
+            } else {
+                self.searched += media
+            }
             completion()
         }
     }
