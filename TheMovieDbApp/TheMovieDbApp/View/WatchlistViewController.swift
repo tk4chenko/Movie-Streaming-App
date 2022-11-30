@@ -35,6 +35,9 @@ class WatchlistViewController: UIViewController {
         
         title = "Watchlist"
         
+        navigationItem.backButtonTitle = ""
+        navigationItem.titleView?.tintColor = .red
+        
         segmentController.setupSegment()
         
         segmentController.addTarget(self, action: #selector(segmentTapped), for: .valueChanged)
@@ -55,6 +58,9 @@ class WatchlistViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        viewModel.fetchTVGenres()
+        viewModel.fetchMovieGenres()
         
         viewModel.fetchMovieWatchlist {
             self.tableView.reloadData()
@@ -135,6 +141,21 @@ extension WatchlistViewController: UITableViewDelegate, UITableViewDataSource {
         }
         removeAction.backgroundColor = .red
         return UISwipeActionsConfiguration(actions: [removeAction])
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let vc = storyboard.instantiateViewController(withIdentifier: DetailsViewController.identifier) as? DetailsViewController else { return }
+        
+        switch self.segmentController.selectedSegmentIndex {
+        case 0:
+            vc.configure(mediaType: "movie", media: viewModel.arrayOfMoviesWatchlist[indexPath.row], genres: viewModel.movieGenres)
+        case 1:
+            vc.configure(mediaType: "movie", media: viewModel.arrayOfTVShowsWatchlist[indexPath.row], genres: viewModel.tvGenres)
+        default:
+            return
+        }
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }

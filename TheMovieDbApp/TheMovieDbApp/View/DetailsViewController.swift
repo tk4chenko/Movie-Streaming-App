@@ -23,7 +23,7 @@ class DetailsViewController: UIViewController {
         let control = UIPageControl()
         control.translatesAutoresizingMaskIntoConstraints = false
         control.isUserInteractionEnabled = true
-        control.currentPageIndicatorTintColor = .systemBlue
+        control.currentPageIndicatorTintColor = .red
         control.pageIndicatorTintColor = .systemGray5
         return control
     }()

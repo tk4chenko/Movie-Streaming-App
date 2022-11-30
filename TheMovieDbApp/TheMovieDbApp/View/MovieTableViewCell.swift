@@ -49,7 +49,9 @@ class MovieTableViewCell: UITableViewCell {
         return label
     }()
     
+    
     override func layoutSubviews() {
+        super.layoutSubviews()
         setupConstraints()
     }
     

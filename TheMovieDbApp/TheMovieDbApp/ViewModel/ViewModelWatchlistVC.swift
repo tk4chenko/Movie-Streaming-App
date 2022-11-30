@@ -11,6 +11,8 @@ import Locksmith
 class ViewModelWatchlistVC {
     public var arrayOfMoviesWatchlist = [Media]()
     public var arrayOfTVShowsWatchlist = [Media]()
+    public var movieGenres = [Genre]()
+    public var tvGenres = [Genre]()
     
     public func fetchMovieWatchlist(completion: @escaping() -> Void) {
         guard let dictionary = Locksmith.loadDataForUserAccount(userAccount: "Session") else { return }
@@ -33,6 +35,22 @@ class ViewModelWatchlistVC {
         NetworkManager.shared.removeFromWatchlist(accountID: dictionary["account"] as! Int, mediaType: mediaType, mediaId: mediaId, sessionId: dictionary["session"] as! String) { session, mediaId in
             print(session, mediaId)
             completion()
+        }
+    }
+    
+    public func fetchMovieGenres() {
+        NetworkManager.shared.loadGenresForMedia(type: "movie") { genres in
+            self.movieGenres = genres
+            //            self.delegate?.reloadData()
+//            completion()
+        }
+    }
+    
+    public func fetchTVGenres() {
+        NetworkManager.shared.loadGenresForMedia(type: "tv") { genres in
+            self.tvGenres = genres
+            //            self.delegate?.reloadData()
+//            completion()
         }
     }
     

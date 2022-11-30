@@ -18,6 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="yrQ-9m-NsJ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="tintColor" red="0.89783344070000004" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
                     <navigationItem key="navigationItem" id="dgx-KZ-u2X"/>
                 </viewController>
@@ -34,6 +35,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="L1o-D8-YZO"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="tintColor" red="0.89783344070000004" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
                     <navigationItem key="navigationItem" id="dnq-BA-iLx"/>
                 </viewController>
@@ -41,7 +43,7 @@
             </objects>
             <point key="canvasLocation" x="48" y="2450"/>
         </scene>
-        <!--Movies-->
+        <!--Discover View Controller-->
         <scene sceneID="LIb-nW-OnY">
             <objects>
                 <viewController id="qKq-pl-Bci" customClass="DiscoverViewController" customModule="TheMovieDbApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -51,7 +53,6 @@
                         <viewLayoutGuide key="safeArea" id="MmR-RU-MUT"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Movies" image="film" catalog="system" id="n23-eO-qQU"/>
                     <navigationItem key="navigationItem" id="x8b-XO-vOf"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m6l-CK-U8T" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -67,6 +68,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="lMM-KA-fC4"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="tintColor" red="0.89783344070000004" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="REf-yY-lCy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -210,6 +212,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="USJ-Q1-o4c">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.89783344070000004" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -229,6 +232,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Dvu-8i-exw">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.89783344070000004" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
