@@ -15,7 +15,7 @@ class WatchlistViewController: UIViewController {
     private var watchlistOfTVShows = [Media]()
     
     private let segmentController: UISegmentedControl = {
-        let items = ["Movies", "TShows"]
+        let items = ["Movies", "TVShows"]
         let control = UISegmentedControl(items: items)
         control.translatesAutoresizingMaskIntoConstraints = false
         control.selectedSegmentIndex = 0
@@ -58,9 +58,6 @@ class WatchlistViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        viewModel.fetchTVGenres()
-        viewModel.fetchMovieGenres()
         
         viewModel.fetchMovieWatchlist {
             self.tableView.reloadData()
@@ -149,9 +146,9 @@ extension WatchlistViewController: UITableViewDelegate, UITableViewDataSource {
         
         switch self.segmentController.selectedSegmentIndex {
         case 0:
-            vc.configure(mediaType: "movie", media: viewModel.arrayOfMoviesWatchlist[indexPath.row], genres: viewModel.movieGenres)
+            vc.configure(mediaType: "movie", media: viewModel.arrayOfMoviesWatchlist[indexPath.row])
         case 1:
-            vc.configure(mediaType: "movie", media: viewModel.arrayOfTVShowsWatchlist[indexPath.row], genres: viewModel.tvGenres)
+            vc.configure(mediaType: "movie", media: viewModel.arrayOfTVShowsWatchlist[indexPath.row])
         default:
             return
         }

@@ -24,7 +24,7 @@ class ViewModelAuthenticationVC {
                         do {
                             try Locksmith.updateData(data: ["session" : session.session_id ?? "", "account": account.id ?? 0], forUserAccount: "Session")
                         } catch {
-                            
+                            print(error)
                         }
                     }
                     completion(session.success )

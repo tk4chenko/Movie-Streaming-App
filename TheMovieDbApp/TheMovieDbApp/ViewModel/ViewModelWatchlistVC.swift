@@ -21,7 +21,6 @@ class ViewModelWatchlistVC {
             completion()
         }
     }
-    
     public func fetchTVShowsWatchlist(completion: @escaping() -> Void) {
         guard let dictionary = Locksmith.loadDataForUserAccount(userAccount: "Session") else { return }
         NetworkManager.shared.getTVShowsWatchlist(accountId: dictionary["account"] as! Int, sessionId: dictionary["session"] as! String) { media in
@@ -29,7 +28,6 @@ class ViewModelWatchlistVC {
             completion()
         }
     }
-    
     public func remove(mediaType: String, mediaId: Int, completion: @escaping() -> Void) {
         guard let dictionary = Locksmith.loadDataForUserAccount(userAccount: "Session") else { return }
         NetworkManager.shared.removeFromWatchlist(accountID: dictionary["account"] as! Int, mediaType: mediaType, mediaId: mediaId, sessionId: dictionary["session"] as! String) { session, mediaId in
@@ -37,21 +35,14 @@ class ViewModelWatchlistVC {
             completion()
         }
     }
-    
     public func fetchMovieGenres() {
         NetworkManager.shared.loadGenresForMedia(type: "movie") { genres in
             self.movieGenres = genres
-            //            self.delegate?.reloadData()
-//            completion()
         }
     }
-    
     public func fetchTVGenres() {
         NetworkManager.shared.loadGenresForMedia(type: "tv") { genres in
             self.tvGenres = genres
-            //            self.delegate?.reloadData()
-//            completion()
         }
     }
-    
 }

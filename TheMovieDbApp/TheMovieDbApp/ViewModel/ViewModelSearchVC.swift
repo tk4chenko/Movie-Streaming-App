@@ -24,11 +24,4 @@ class ViewModelSeacrVC {
             completion()
         }
     }
-    
-    public func loadGenres() {
-        NetworkManager.shared.loadGenresforMovies { genres in
-            self.genres = genres
-        }
-    }
-    
 }

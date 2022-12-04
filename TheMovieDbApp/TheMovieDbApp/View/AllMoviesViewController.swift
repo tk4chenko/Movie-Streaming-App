@@ -29,9 +29,7 @@ class AllMoviesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel.fetchGenres(type: mediaType) {
-            self.movieCollectionView.reloadData()
-        }
+        navigationItem.backButtonTitle = ""
         
         movieCollectionView.delegate = self
         movieCollectionView.dataSource = self
@@ -91,7 +89,7 @@ extension AllMoviesViewController: UICollectionViewDataSource, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = DetailsViewController()
-        vc.configure(mediaType: mediaType, media: viewModel.arrayOfMediaByGenre[indexPath.row], genres: viewModel.genres)
+        vc.configure(mediaType: mediaType, media: viewModel.arrayOfMediaByGenre[indexPath.row])
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

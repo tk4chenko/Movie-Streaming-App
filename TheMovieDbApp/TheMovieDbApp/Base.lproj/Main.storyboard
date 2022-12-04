@@ -110,12 +110,12 @@
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="olL-iq-LTN">
-                                <rect key="frame" x="206.66666666666663" y="453" width="130" height="31"/>
+                                <rect key="frame" x="222.66666666666663" y="453" width="130" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="130" id="awl-DO-eSU"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Guest session">
+                                <buttonConfiguration key="configuration" style="plain" title="Guest session" titleAlignment="leading">
                                     <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="14"/>
                                 </buttonConfiguration>
                                 <connections>
@@ -160,7 +160,7 @@
                             <constraint firstItem="bwJ-a7-AQA" firstAttribute="top" secondItem="4yn-j1-8m4" secondAttribute="bottom" constant="25" id="Ha0-L8-XXh"/>
                             <constraint firstItem="Cr3-Is-FTb" firstAttribute="centerX" secondItem="05g-qL-Lod" secondAttribute="centerX" id="RX2-7c-Dgw"/>
                             <constraint firstItem="bwJ-a7-AQA" firstAttribute="centerX" secondItem="o2p-As-JNa" secondAttribute="centerX" id="UOQ-vA-F29"/>
-                            <constraint firstItem="olL-iq-LTN" firstAttribute="trailing" secondItem="05g-qL-Lod" secondAttribute="trailing" id="Vlk-5W-6Gq"/>
+                            <constraint firstItem="olL-iq-LTN" firstAttribute="trailing" secondItem="05g-qL-Lod" secondAttribute="trailing" constant="16" id="Vlk-5W-6Gq"/>
                             <constraint firstItem="olL-iq-LTN" firstAttribute="top" secondItem="05g-qL-Lod" secondAttribute="bottom" constant="4" id="azA-FF-Q9E"/>
                             <constraint firstItem="4yn-j1-8m4" firstAttribute="centerX" secondItem="bwJ-a7-AQA" secondAttribute="centerX" id="cN4-97-RhB"/>
                             <constraint firstItem="05g-qL-Lod" firstAttribute="centerX" secondItem="bwJ-a7-AQA" secondAttribute="centerX" id="ejv-ca-FJg"/>

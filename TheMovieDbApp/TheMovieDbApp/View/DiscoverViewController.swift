@@ -223,15 +223,15 @@ extension DiscoverViewController: UICollectionViewDataSource, UICollectionViewDe
             self.navigationController?.pushViewController(vc, animated: true)
         } else if indexPath.section == 1 {
             let vc = DetailsViewController()
-            vc.configure(mediaType: selectedItem, media: viewModel.trending[indexPath.row], genres: viewModel.genres)
+            vc.configure(mediaType: selectedItem, media: viewModel.trending[indexPath.row])
             self.navigationController?.pushViewController(vc, animated: true)
         } else if indexPath.section == 2 {
             let vc = DetailsViewController()
-            vc.configure(mediaType: selectedItem, media: viewModel.upcoming[indexPath.row], genres: viewModel.genres)
+            vc.configure(mediaType: selectedItem, media: viewModel.upcoming[indexPath.row])
             self.navigationController?.pushViewController(vc, animated: true)
         } else if indexPath.section == 3 {
             let vc = DetailsViewController()
-            vc.configure(mediaType: selectedItem, media: viewModel.topRated[indexPath.row], genres: viewModel.genres)
+            vc.configure(mediaType: selectedItem, media: viewModel.topRated[indexPath.row])
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

@@ -12,13 +12,7 @@ class ViewModelAllMoviesVC {
     public let totalPages = 3
     public var genres = [Genre]()
     public var arrayOfMediaByGenre = [Media]()
-    
-    public func fetchGenres(type: String, completion: @escaping () -> Void) {
-        NetworkManager.shared.loadGenresForMedia(type: type) { genres in
-            self.genres = genres
-            completion()
-        }
-    }
+
     public func fetchMedia(type: String, genre: Int, completion: @escaping () -> Void) {
         currentPage += 1
         NetworkManager.shared.loadMediaByGenre(type: type, page: currentPage, genre: genre) { media in

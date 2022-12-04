@@ -18,6 +18,7 @@ class DetailsViewController: UIViewController {
     private var mediaId = Int()
     private var mediaType = String()
     private var watchlistType = String()
+//    private var genres = [Genre]()
     
     private lazy var pageControl: UIPageControl = {
         let control = UIPageControl()
@@ -93,6 +94,8 @@ class DetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
         view.backgroundColor = .white
         
         videoCollectionView.delegate = self
@@ -149,17 +152,39 @@ class DetailsViewController: UIViewController {
         }
     }
     
-    public func configure(mediaType: String, media: Media, genres: [Genre]) {
+    public func configure(mediaType: String, media: Media) {
         mediaId = media.id
+    
+        func choosingGenres(genres: [Genre]) -> String {
+            var g = ""
+            for id in media.genre_ids {
+                for genre in genres {
+                    if id == genre.id {
+                        if id == media.genre_ids.last {
+                            g += genre.name
+                        } else {
+                            g += genre.name + ", "
+                        }
+                    }
+                }
+            }
+            return g
+        }
         
         if media.title != nil {
             self.mediaType = "movie"
             self.watchlistType = "movies"
+            viewModel.fetchMovieGenres { genres in
+                self.genreLabel.text = choosingGenres(genres: genres)
+            }
         } else {
             self.mediaType = "tv"
             self.watchlistType = "tv"
+            viewModel.fetchTVGenres { genres in
+                self.genreLabel.text = choosingGenres(genres: genres)
+            }
         }
-        
+    
         title = media.title ?? "" + (media.name ?? "")
         titleLabel.text = media.original_title ?? "" + (media.original_name ?? "")
         let date = media.release_date ?? "" + (media.first_air_date ?? "")
@@ -168,19 +193,6 @@ class DetailsViewController: UIViewController {
         posterView.sd_imageIndicator = SDWebImageActivityIndicator.gray
         posterView.sd_setImage(with: url, completed: nil)
         overviewLabel.text = media.overview
-        var g = ""
-        for id in media.genre_ids {
-            for genre in genres {
-                if id == genre.id {
-                    if id == media.genre_ids.last {
-                        g += genre.name
-                    } else {
-                        g += genre.name + ", "
-                    }
-                }
-            }
-        }
-        genreLabel.text = g
         viewModel.loadTrailers(mediaType: mediaType, movieId: media.id) {
             self.videoCollectionView.reloadData()
         }

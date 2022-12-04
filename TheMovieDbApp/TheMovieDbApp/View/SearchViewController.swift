@@ -36,8 +36,7 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel.loadGenres()
-        
+        navigationItem.backButtonTitle = ""
 //        searchBar.searchBar.delegate = self
         navigationItem.title  = "Search"
         view.backgroundColor = .systemBackground
@@ -65,7 +64,7 @@ extension SearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let query = searchController.searchBar.text else { return }
         self.viewModel.currentPage = 0
-        viewModel.searchMovie(query: query) {
+        viewModel.searchMovie(query: query.trimmingCharacters(in: .whitespaces)) {
                 self.movieCollectionView.reloadData()
         }
     }
@@ -100,7 +99,7 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let vc = storyboard.instantiateViewController(withIdentifier: "DetailsViewController") as? DetailsViewController else { return }
-        vc.configure(mediaType: "movie", media: viewModel.searched[indexPath.row], genres: viewModel.genres)
+        vc.configure(mediaType: "movie", media: viewModel.searched[indexPath.row])
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
