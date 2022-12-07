@@ -12,6 +12,7 @@ class ViewModelSeacrVC {
     public let totalPages = 5
     public var searched = [Media]()
     public var genres = [Genre]()
+    public var popular  = [Media]()
     
     public func searchMovie(query: String, completion: @escaping()->Void) {
         currentPage += 1
@@ -21,6 +22,13 @@ class ViewModelSeacrVC {
             } else {
                 self.searched += media
             }
+            completion()
+        }
+    }
+    
+    public func fetchPopularMovies(completion: @escaping()->Void) {
+        NetworkManager.shared.loadPopularMovies { media in
+            self.popular = media
             completion()
         }
     }

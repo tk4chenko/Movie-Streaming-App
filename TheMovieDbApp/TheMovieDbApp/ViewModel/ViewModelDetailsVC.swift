@@ -14,6 +14,9 @@ class ViewModelDetailsVC {
     public var movieGenres = [Genre]()
     public var tvGenres = [Genre]()
     
+    public var movieWatchlist = [Media]()
+    public var tvWatchlist = [Media]()
+    
     public func fetchMovieGenres(completion: @escaping ([Genre]) -> Void) {
         NetworkManager.shared.loadGenresForMedia(type: "movie") { genres in
             self.movieGenres = genres
@@ -47,6 +50,22 @@ class ViewModelDetailsVC {
         NetworkManager.shared.getWatchlist(type: type, accountId: dictionary["account"] as! Int, sessionId: dictionary["session"] as! String) { media in
             self.watchlist = media
             completion()
+        }
+    }
+    
+    public func getMovieWatchlist(completion: @escaping ([Media]) -> Void) {
+        guard let dictionary = Locksmith.loadDataForUserAccount(userAccount: "Session") else { return }
+        NetworkManager.shared.getWatchlist(type: "movies", accountId: dictionary["account"] as! Int, sessionId: dictionary["session"] as! String) { media in
+            self.movieWatchlist = media
+            completion(media)
+        }
+    }
+    
+    public func getTVWatchlist(completion: @escaping ([Media]) -> Void) {
+        guard let dictionary = Locksmith.loadDataForUserAccount(userAccount: "Session") else { return }
+        NetworkManager.shared.getWatchlist(type: "tv", accountId: dictionary["account"] as! Int, sessionId: dictionary["session"] as! String) { media in
+            self.tvWatchlist = media
+            completion(media)
         }
     }
 }

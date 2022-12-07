@@ -34,14 +34,14 @@ struct AccountID: Codable {
     let statusMessage: String?
 }
 
-struct Welcome: Codable {
-    let success: Bool
-    let statusCode: Int
-    let statusMessage: String
-
-    enum CodingKeys: String, CodingKey {
-        case success
-        case statusCode = "status_code"
-        case statusMessage = "status_message"
-    }
-}
+//struct Welcome: Codable {
+//    let success: Bool
+//    let statusCode: Int
+//    let statusMessage: String
+//
+//    enum CodingKeys: String, CodingKey {
+//        case success
+//        case statusCode = "status_code"
+//        case statusMessage = "status_message"
+//    }
+//}

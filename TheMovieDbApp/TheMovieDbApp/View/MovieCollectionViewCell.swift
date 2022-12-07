@@ -10,6 +10,8 @@ import SDWebImage
 
 class MovieCollectionViewCell: UICollectionViewCell {
     
+    let viewModel = ViewModelDetailsVC()
+    
     static var identifier = "MovieCollectionViewCell"
     
     private let container: UIView = {
@@ -17,6 +19,8 @@ class MovieCollectionViewCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    private let saveButton = UIButton(type: .custom)
     
     private let posterView: UIImageView = {
         let imageView = UIImageView()
@@ -54,8 +58,27 @@ class MovieCollectionViewCell: UICollectionViewCell {
         label.font = UIFont.systemFont(ofSize: 11)
         return label
     }()
-
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        saveButton.setImage(UIImage(systemName: "trash"), for: .normal)
+        saveButton.setImage(UIImage(systemName: "circle"), for: .selected)
+        saveButton.translatesAutoresizingMaskIntoConstraints = false
+//        saveButton.isSelected = true
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.saveButton.isSelected = false
+    }
+    
     override func layoutSubviews() {
+        
         super.layoutSubviews()
         configureShadow()
         setupConstraint()
@@ -70,6 +93,25 @@ class MovieCollectionViewCell: UICollectionViewCell {
     }
     
     public func configure(color: UIColor, with title: Media) {
+        
+//        if title.title != nil {
+//            viewModel.getMovieWatchlist { media in
+//                for movie in media {
+//                    if movie.id == title.id {
+//                        self.saveButton.isSelected = true
+//                    }
+//                }
+//            }
+//        } else {
+//            viewModel.getTVWatchlist { media in
+//                for tv in media {
+//                    if tv.id == title.id {
+//                        self.saveButton.isSelected = true
+//                    }
+//                }
+//            }
+//        }
+        
         scoreView.backgroundColor = color
         scoreLabel.text = String(Int(title.vote_average * 10)) + "%"
         titleLabel.text = String(title.title ?? "" + (title.name ?? ""))
@@ -84,6 +126,8 @@ class MovieCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(titleLabel)
         contentView.addSubview(scoreView)
         scoreView.addSubview(scoreLabel)
+        
+//        contentView.addSubview(saveButton)
         
         NSLayoutConstraint.activate([
             container.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 0),
@@ -108,7 +152,12 @@ class MovieCollectionViewCell: UICollectionViewCell {
             scoreLabel.leftAnchor.constraint(equalTo: scoreView.leftAnchor, constant: 4),
             scoreLabel.rightAnchor.constraint(equalTo: scoreView.rightAnchor, constant: -4),
             scoreLabel.topAnchor.constraint(equalTo: scoreView.topAnchor, constant: 2),
-            scoreLabel.bottomAnchor.constraint(equalTo: scoreView.bottomAnchor, constant: -2)
+            scoreLabel.bottomAnchor.constraint(equalTo: scoreView.bottomAnchor, constant: -2),
+            
+//            saveButton.topAnchor.constraint(equalTo: container.topAnchor),
+//            saveButton.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+//            saveButton.heightAnchor.constraint(equalToConstant: 40),
+//            saveButton.widthAnchor.constraint(equalToConstant: 40)
         ])
     }
     

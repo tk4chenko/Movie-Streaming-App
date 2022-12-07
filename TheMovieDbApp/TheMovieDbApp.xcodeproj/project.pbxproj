@@ -32,7 +32,6 @@
 		0498A54C29115C9600A70DCA /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498A54B29115C9600A70DCA /* AuthenticationViewController.swift */; };
 		0498A55229115E6300A70DCA /* ViewModelAuthenticationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498A55129115E6300A70DCA /* ViewModelAuthenticationVC.swift */; };
 		0498A55429115EC000A70DCA /* AuthenticationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0498A55329115EC000A70DCA /* AuthenticationModel.swift */; };
-		04B9CBD92915453A00F72258 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B9CBD72915453A00F72258 /* SectionHeader.swift */; };
 		04BA20B82919701A007AAC11 /* WatchlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA20B72919701A007AAC11 /* WatchlistViewController.swift */; };
 		04BA20BA2919738B007AAC11 /* ViewModelWatchlistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA20B92919738B007AAC11 /* ViewModelWatchlistVC.swift */; };
 		04C47639292A7C18006CB22D /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C47638292A7C18006CB22D /* NetworkManager.swift */; };
@@ -68,7 +67,6 @@
 		0498A54B29115C9600A70DCA /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		0498A55129115E6300A70DCA /* ViewModelAuthenticationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelAuthenticationVC.swift; sourceTree = "<group>"; };
 		0498A55329115EC000A70DCA /* AuthenticationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationModel.swift; sourceTree = "<group>"; };
-		04B9CBD72915453A00F72258 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		04BA20B72919701A007AAC11 /* WatchlistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistViewController.swift; sourceTree = "<group>"; };
 		04BA20B92919738B007AAC11 /* ViewModelWatchlistVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelWatchlistVC.swift; sourceTree = "<group>"; };
 		04C47638292A7C18006CB22D /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -161,11 +159,10 @@
 		0498A54A29115C8E00A70DCA /* View */ = {
 			isa = PBXGroup;
 			children = (
-				04B9CBD72915453A00F72258 /* SectionHeader.swift */,
+				040817172922B57200B90BAA /* Header.swift */,
 				046754972915A3F100EC8098 /* MovieTableViewCell.swift */,
 				040817192922B95A00B90BAA /* TrendingCell.swift */,
 				0408171B2922B9E900B90BAA /* GenreCell.swift */,
-				040817172922B57200B90BAA /* Header.swift */,
 				041BC79129131E63005AEBB6 /* MovieCollectionViewCell.swift */,
 				04E23BF02923ABE300C78470 /* AllMoviesViewController.swift */,
 				047B24AF291820AF00F545B5 /* VideoCollectionViewCell.swift */,
@@ -331,7 +328,6 @@
 				04BA20BA2919738B007AAC11 /* ViewModelWatchlistVC.swift in Sources */,
 				040817182922B57200B90BAA /* Header.swift in Sources */,
 				041BC79329131E63005AEBB6 /* MovieCollectionViewCell.swift in Sources */,
-				04B9CBD92915453A00F72258 /* SectionHeader.swift in Sources */,
 				0429B6232916B68800228598 /* ViewModelSearchVC.swift in Sources */,
 				0471EE34291033B20087EE1E /* AppDelegate.swift in Sources */,
 				04E23BF12923ABE300C78470 /* AllMoviesViewController.swift in Sources */,

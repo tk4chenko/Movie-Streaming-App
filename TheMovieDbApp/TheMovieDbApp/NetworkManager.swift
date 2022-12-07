@@ -185,14 +185,14 @@ class NetworkManager {
         }
     }
     
-    func addToWatchlist(watchlist: Bool, accountID: Int, mediaType: String, mediaId: Int, sessionId: String, completion: @escaping (Welcome, String) -> Void) {
+    func addToWatchlist(watchlist: Bool, accountID: Int, mediaType: String, mediaId: Int, sessionId: String, completion: @escaping (SessionResponce, String) -> Void) {
         let parameters: [String: Any] = [
               "media_type": mediaType,
               "media_id": mediaId,
               "watchlist": watchlist
         ]
         let genresRequest = AF.request("https://api.themoviedb.org/3/account/\(accountID)/watchlist?api_key=\(apiKey)&session_id=\(sessionId)", method: .post, parameters: parameters, encoding: JSONEncoding.default)
-        genresRequest.responseDecodable(of: Welcome.self) { response in
+        genresRequest.responseDecodable(of: SessionResponce.self) { response in
             do {
                 let data = try response.result.get()
                 completion(data, mediaType)
@@ -235,6 +235,19 @@ class NetworkManager {
         genresRequest.responseDecodable(of: Genres.self) { response in
             do {
                 let data = try response.result.get().genres
+                completion(data)
+            }
+            catch {
+                print("error: \(error)")
+            }
+        }
+    }
+    
+    func loadPopularMovies(completion: @escaping ([Media]) -> Void) {
+        let genresRequest = AF.request("https://api.themoviedb.org/3/movie/popular?api_key=\(apiKey)&language=en-US&page=1", method: .get)
+        genresRequest.responseDecodable(of: MediaResponce.self) { response in
+            do {
+                let data = try response.result.get().results
                 completion(data)
             }
             catch {

@@ -27,7 +27,7 @@ class ViewModelAuthenticationVC {
                             print(error)
                         }
                     }
-                    completion(session.success )
+                    completion(session.success)
                 }
             }
         }
