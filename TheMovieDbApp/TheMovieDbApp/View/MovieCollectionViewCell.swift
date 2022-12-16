@@ -20,7 +20,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
-    private let saveButton = UIButton(type: .custom)
+//    private let saveButton = UIButton(type: .custom)
     
     private let posterView: UIImageView = {
         let imageView = UIImageView()
@@ -62,10 +62,9 @@ class MovieCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        saveButton.setImage(UIImage(systemName: "trash"), for: .normal)
-        saveButton.setImage(UIImage(systemName: "circle"), for: .selected)
-        saveButton.translatesAutoresizingMaskIntoConstraints = false
-//        saveButton.isSelected = true
+//        saveButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
+//        saveButton.setImage(UIImage(systemName: "bookmark.fill"), for: .selected)
+//        saveButton.translatesAutoresizingMaskIntoConstraints = false
     }
     
     required init?(coder: NSCoder) {
@@ -74,7 +73,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.saveButton.isSelected = false
+//        self.saveButton.isSelected = false
     }
     
     override func layoutSubviews() {

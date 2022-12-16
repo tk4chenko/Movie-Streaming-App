@@ -126,7 +126,13 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let vc = storyboard.instantiateViewController(withIdentifier: "DetailsViewController") as? DetailsViewController else { return }
-        vc.configure(mediaType: "movie", media: viewModel.searched[indexPath.row])
+        switch searchController.isActive {
+        case true:
+            vc.configure(mediaType: "movie", media: viewModel.searched[indexPath.row])
+        case false:
+            vc.configure(mediaType: "movie", media: viewModel.popular[indexPath.row])
+        }
+        
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -60,7 +60,6 @@ class AllMoviesViewController: UIViewController {
             }
         }
     }
-    
 }
 
 extension AllMoviesViewController: UICollectionViewDataSource, UICollectionViewDelegate {

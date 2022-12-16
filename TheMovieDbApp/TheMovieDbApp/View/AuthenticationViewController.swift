@@ -59,9 +59,25 @@ class AuthenticationViewController: UIViewController {
                 self.dismiss(animated: false)
                 self.present(vc, animated: false)
             } else {
-                self.wrongLabel.text = "Wrong password or username"
+//                self.wrongLabel.text = "Wrong password or username"
+                self.addAllert()
             }
         }
+    }
+    
+    func addAllert() {
+        
+        let dialogMessage = UIAlertController(title: "Error", message: "Incorrect password or username", preferredStyle: .alert)
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) -> Void in
+            print("Pushed Cancel")
+        }
+        dialogMessage.view.tintColor = .red
+        
+        dialogMessage.addAction(cancel)
+        
+        self.present(dialogMessage, animated: true, completion: nil)
+        
     }
 
 }
