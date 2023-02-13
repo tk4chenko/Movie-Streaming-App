@@ -14,6 +14,7 @@ With this application you have a chance to follow the news of film production. B
 * MVVM
 * Alamofire
 * SDWebImage
+* YoutubeiOSPlayerHelper
 * Locksmith
 
 ## Overview
@@ -28,16 +29,15 @@ The application contains 6 screens:
 
 ## Features
 * UI Programmatically
-* No Storyboard
 * Autolayout
 * UICollectionViewCompostionalLayout
-* Authentication
-* Pagination
-* Adding movies to your watchlist
 * Custom UICollectionView/UITableView Cell
-* Date Formatter
 * Custom UISegmentedControl
-
+* Authentication
+* Adding movies to your watchlist
+* Pagination
+* YouTube Player
+* Date Formatter
 
 ## Resources
 [The Movie Database API](https://developers.themoviedb.org/3/getting-started/introduction)
